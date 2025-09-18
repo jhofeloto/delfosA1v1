@@ -23,11 +23,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p><strong>Timestamp:</strong> {{ data.timestamp }}</p>
-                            <p><strong>Dataset:</strong> {{ data.execution_info.shape[0] if data.execution_info.shape else 'N/A' }} pacientes</p>
+                            <p><strong>Dataset:</strong> {{ data.dataset_shape[0] if data.dataset_shape and data.dataset_shape|length > 0 else 'N/A' }} pacientes</p>
                         </div>
                         <div class="col-md-6">
                             <p><strong>Modelo Final:</strong> {{ data.final_model.name if data.final_model else 'N/A' }}</p>
-                            <p><strong>Variables:</strong> {{ data.execution_info.shape[1] if data.execution_info.shape else 'N/A' }}</p>
+                            <p><strong>Variables:</strong> {{ data.dataset_shape[1] if data.dataset_shape and data.dataset_shape|length > 1 else 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
@@ -47,10 +47,14 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ metric|replace('_', ' ')|title }}</h5>
                     <p class="card-text display-6">
-                        {% if value < 1 %}
-                            {{ "%.3f"|format(value) }}
+                        {% if value is number %}
+                            {% if value < 1 %}
+                                {{ "%.3f"|format(value) }}
+                            {% else %}
+                                {{ "%.0f"|format(value) }}
+                            {% endif %}
                         {% else %}
-                            {{ "%.0f"|format(value) }}
+                            {{ value }}
                         {% endif %}
                     </p>
                 </div>

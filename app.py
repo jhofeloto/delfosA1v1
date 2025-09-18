@@ -124,8 +124,10 @@ def dashboard():
     """Dashboard detallado con métricas"""
     
     # Preparar datos para visualización
+    dataset_info = dm2_app.results.get('dataset_info', {})
     dashboard_data = {
-        'execution_info': dm2_app.results.get('dataset_info', {}),
+        'execution_info': dataset_info,
+        'dataset_shape': dataset_info.get('shape', [0, 0]),
         'final_model': dm2_app.results.get('final_model', {}),
         'baseline_results': dm2_app.results.get('baseline_comparison', {}),
         'optimization_results': dm2_app.results.get('optimization_results', {}),
@@ -138,6 +140,96 @@ def dashboard():
 def predict_form():
     """Formulario para predicción individual"""
     return render_template('predict.html', model_loaded=dm2_app.model_loaded)
+
+def apply_feature_engineering(input_data):
+    """Aplica el mismo feature engineering usado durante el entrenamiento"""
+    df = input_data.copy()
+    
+    # Convertir tipos numéricos
+    numeric_fields = ['edad', 'peso', 'talla', 'imc', 'tas', 'tad', 
+                     'perimetro_abdominal', 'puntaje_total', 'riesgo_dm']
+    
+    for field in numeric_fields:
+        if field in df.columns:
+            df[field] = pd.to_numeric(df[field], errors='coerce')
+    
+    # 1. Crear características derivadas que espera el modelo
+    
+    # Edad_Años (parece ser duplicado de edad)
+    if 'edad' in df.columns:
+        df['Edad_Años'] = df['edad']
+        
+        # edad_risk_score
+        df['edad_risk_score'] = np.where(
+            df['edad'] >= 60, 3,
+            np.where(df['edad'] >= 45, 2,
+                    np.where(df['edad'] >= 30, 1, 0))
+        )
+    
+    # imc_risk_score
+    if 'imc' in df.columns:
+        df['imc_risk_score'] = np.where(
+            df['imc'] >= 30, 3,  # Obesidad
+            np.where(df['imc'] >= 25, 2,  # Sobrepeso
+                    np.where(df['imc'] >= 18.5, 1, 0))  # Normal o bajo peso
+        )
+    
+    # Características de presión arterial
+    if 'tas' in df.columns and 'tad' in df.columns:
+        # hipertension
+        df['hipertension'] = (
+            (df['tas'] >= 140) | (df['tad'] >= 90)
+        ).astype(int)
+        
+        # pulse_pressure
+        df['pulse_pressure'] = df['tas'] - df['tad']
+        
+        # mean_arterial_pressure
+        df['mean_arterial_pressure'] = df['tad'] + ((df['tas'] - df['tad']) / 3)
+        
+        # Interacciones
+        df['tas_x_tad'] = df['tas'] * df['tad']
+    
+    # waist_height_ratio
+    if 'perimetro_abdominal' in df.columns and 'talla' in df.columns:
+        df['waist_height_ratio'] = df['perimetro_abdominal'] / df['talla']
+    
+    # Binning de perimetro_abdominal
+    if 'perimetro_abdominal' in df.columns:
+        # Crear bins similares a los del entrenamiento
+        df['perimetro_abdominal_bin'] = pd.cut(
+            df['perimetro_abdominal'],
+            bins=[-np.inf, 80, 94, 102, np.inf],
+            labels=[0, 1, 2, 3]
+        ).astype(float)
+    
+    # Interacciones con edad
+    if 'edad' in df.columns:
+        if 'imc' in df.columns:
+            df['edad_x_imc'] = df['edad'] * df['imc']
+        if 'tas' in df.columns:
+            df['edad_x_tas'] = df['edad'] * df['tas']
+    
+    # Convertir Consumo_Cigarrillo a numérico si es necesario
+    if 'Consumo_Cigarrillo' in df.columns:
+        df['Consumo_Cigarrillo'] = pd.to_numeric(df['Consumo_Cigarrillo'], errors='coerce')
+    
+    # Asegurar que todas las características esperadas están presentes
+    expected_features = [
+        'Consumo_Cigarrillo', 'edad_x_imc', 'puntaje_total', 'edad_x_tas', 'edad',
+        'Edad_Años', 'edad_risk_score', 'pulse_pressure', 'riesgo_dm', 'tas',
+        'perimetro_abdominal_bin', 'waist_height_ratio', 'perimetro_abdominal',
+        'tas_x_tad', 'imc', 'hipertension', 'talla', 'mean_arterial_pressure',
+        'imc_risk_score', 'peso', 'tad'
+    ]
+    
+    # Agregar características faltantes con valores por defecto
+    for feature in expected_features:
+        if feature not in df.columns:
+            df[feature] = 0
+    
+    # Seleccionar solo las características esperadas en el orden correcto
+    return df[expected_features]
 
 @app.route('/api/predict', methods=['POST'])
 def api_predict():
@@ -153,17 +245,12 @@ def api_predict():
         # Crear DataFrame con los datos
         input_data = pd.DataFrame([data])
         
-        # Convertir tipos numéricos
-        numeric_fields = ['edad', 'peso', 'talla', 'imc', 'tas', 'tad', 
-                         'perimetro_abdominal', 'puntaje_total', 'riesgo_dm']
-        
-        for field in numeric_fields:
-            if field in input_data.columns:
-                input_data[field] = pd.to_numeric(input_data[field], errors='coerce')
+        # Aplicar feature engineering
+        processed_data = apply_feature_engineering(input_data)
         
         # Hacer predicción
-        prediction = dm2_app.model.predict(input_data)[0]
-        probabilities = dm2_app.model.predict_proba(input_data)[0]
+        prediction = dm2_app.model.predict(processed_data)[0]
+        probabilities = dm2_app.model.predict_proba(processed_data)[0]
         
         # Preparar resultado
         class_names = dm2_app.model.classes_
@@ -336,10 +423,13 @@ def upload_file():
                 
                 # Hacer predicciones si hay modelo
                 if dm2_app.model_loaded:
-                    predictions = dm2_app.model.predict(df)
-                    probabilities = dm2_app.model.predict_proba(df)
+                    # Aplicar feature engineering a todo el DataFrame
+                    processed_df = apply_feature_engineering(df)
                     
-                    # Agregar resultados al DataFrame
+                    predictions = dm2_app.model.predict(processed_df)
+                    probabilities = dm2_app.model.predict_proba(processed_df)
+                    
+                    # Agregar resultados al DataFrame original
                     df['Prediccion'] = predictions
                     for i, class_name in enumerate(dm2_app.model.classes_):
                         df[f'Prob_{class_name}'] = probabilities[:, i]
