@@ -1,0 +1,383 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Principal - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <!-- Header -->
+    <div class="gradient-bg rounded-3 p-4 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold mb-2">
+                    <i class="fas fa-heartbeat me-3"></i>
+                    Pipeline DM2 - Dashboard Principal
+                </h1>
+                <p class="lead mb-0">
+                    Sistema de Machine Learning para Predicción de Diabetes Mellitus Tipo 2
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="d-flex flex-column align-items-end">
+                    <span class="badge bg-light text-dark fs-6 mb-2">
+                        <i class="fas fa-calendar me-2"></i>
+                        {{ moment().format('DD/MM/YYYY HH:mm') if moment else 'Sistema Activo' }}
+                    </span>
+                    {% if model_loaded %}
+                        <span class="badge bg-success fs-6">
+                            <i class="fas fa-check-circle me-2"></i>Modelo Cargado
+                        </span>
+                    {% else %}
+                        <span class="badge bg-warning fs-6">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Modelo No Disponible
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas Principales -->
+    {% if results and results.final_model %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">📊 Métricas de Performance del Modelo</h3>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+            <div class="card card-metric h-100">
+                <div class="card-body text-center">
+                    <div class="metric-value text-success">
+                        {{ "%.1f"|format(results.final_model.metrics.diabetes_sensitivity * 100) }}%
+                    </div>
+                    <div class="metric-label">Sensibilidad Diabetes</div>
+                    <small class="text-muted">Detección de casos</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+            <div class="card card-metric h-100">
+                <div class="card-body text-center">
+                    <div class="metric-value text-info">
+                        {{ "%.1f"|format(results.final_model.metrics.diabetes_specificity * 100) }}%
+                    </div>
+                    <div class="metric-label">Especificidad</div>
+                    <small class="text-muted">Verdaderos negativos</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+            <div class="card card-metric h-100">
+                <div class="card-body text-center">
+                    <div class="metric-value text-primary">
+                        {{ "%.3f"|format(results.final_model.metrics.f1_macro) }}
+                    </div>
+                    <div class="metric-label">F1 Macro</div>
+                    <small class="text-muted">Balance general</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+            <div class="card card-metric h-100">
+                <div class="card-body text-center">
+                    <div class="metric-value text-warning">
+                        {{ "%.1f"|format(results.final_model.metrics.diabetes_ppv * 100) }}%
+                    </div>
+                    <div class="metric-label">PPV Diabetes</div>
+                    <small class="text-muted">Precisión positivos</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+            <div class="card card-metric h-100">
+                <div class="card-body text-center">
+                    <div class="metric-value text-secondary">
+                        {{ "%.3f"|format(results.final_model.metrics.balanced_accuracy) }}
+                    </div>
+                    <div class="metric-label">Balanced Acc</div>
+                    <small class="text-muted">Precisión balanceada</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+            <div class="card card-metric h-100">
+                <div class="card-body text-center">
+                    <div class="metric-value text-dark">
+                        {{ results.dataset_info.shape[0] if results.dataset_info else 0 }}
+                    </div>
+                    <div class="metric-label">Pacientes</div>
+                    <small class="text-muted">Dataset size</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Información del Modelo -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-robot me-2"></i>Información del Modelo
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if results and results.final_model %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <strong>Algoritmo:</strong><br>
+                                <span class="badge bg-secondary">{{ results.final_model.name|title }}</span>
+                            </div>
+                            <div class="col-sm-6">
+                                <strong>Estado:</strong><br>
+                                {% if model_loaded %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check me-1"></i>Operativo
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning">
+                                        <i class="fas fa-clock me-1"></i>Cargando
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <strong>Última Ejecución:</strong><br>
+                                <small class="text-muted">
+                                    {{ results.execution_timestamp[:19] if results.execution_timestamp else 'No disponible' }}
+                                </small>
+                            </div>
+                            <div class="col-sm-6">
+                                <strong>Pipeline Versión:</strong><br>
+                                <small class="text-muted">v2.0 - Mejorado</small>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-exclamation-circle fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No hay información del modelo disponible.</p>
+                            <p class="small">Ejecuta el pipeline para generar resultados.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-database me-2"></i>Información del Dataset
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if results and results.dataset_info %}
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <strong>Pacientes:</strong><br>
+                                <span class="h4 text-primary">{{ results.dataset_info.shape[0] }}</span>
+                            </div>
+                            <div class="col-sm-6">
+                                <strong>Variables:</strong><br>
+                                <span class="h4 text-info">{{ results.dataset_info.shape[1] }}</span>
+                            </div>
+                        </div>
+                        
+                        <strong>Distribución de Clases:</strong>
+                        {% for clase, count in results.dataset_info.target_distribution.items() %}
+                            {% set percentage = (count / results.dataset_info.shape[0] * 100)|round(1) %}
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ clase }}:</span>
+                                <div class="d-flex align-items-center">
+                                    <div class="progress me-2" style="width: 100px;">
+                                        {% if clase == 'Normal' %}
+                                            <div class="progress-bar bg-success" style="width: {{ percentage }}%"></div>
+                                        {% elif clase == 'Prediabetes' %}
+                                            <div class="progress-bar bg-warning" style="width: {{ percentage }}%"></div>
+                                        {% else %}
+                                            <div class="progress-bar bg-danger" style="width: {{ percentage }}%"></div>
+                                        {% endif %}
+                                    </div>
+                                    <small>{{ count }} ({{ percentage }}%)</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No hay información del dataset disponible.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acciones Rápidas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">🚀 Acciones Rápidas</h3>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center h-100 card-metric">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-calculator fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Predicción Individual</h5>
+                    <p class="card-text">Evalúa el riesgo de diabetes de un paciente específico.</p>
+                    <a href="{{ url_for('predict_form') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Predecir
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center h-100 card-metric">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-chart-line fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Visualizaciones</h5>
+                    <p class="card-text">Explora gráficos interactivos del modelo y resultados.</p>
+                    <a href="{{ url_for('visualizations') }}" class="btn btn-success">
+                        <i class="fas fa-eye me-2"></i>Ver Gráficos
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center h-100 card-metric">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-upload fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="card-title">Carga Masiva</h5>
+                    <p class="card-text">Sube un archivo CSV para predicciones en lote.</p>
+                    <a href="{{ url_for('upload_file') }}" class="btn btn-warning">
+                        <i class="fas fa-file-csv me-2"></i>Subir CSV
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card text-center h-100 card-metric">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-chart-bar fa-3x text-info"></i>
+                    </div>
+                    <h5 class="card-title">Dashboard Detallado</h5>
+                    <p class="card-text">Vista completa de métricas y comparaciones.</p>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-info">
+                        <i class="fas fa-tachometer-alt me-2"></i>Ver Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interpretación Clínica -->
+    {% if results and results.final_model %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-user-md me-2"></i>Interpretación Clínica
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-success">
+                                <i class="fas fa-check-circle me-2"></i>Fortalezas del Modelo
+                            </h6>
+                            <ul class="list-unstyled">
+                                {% if results.final_model.metrics.diabetes_sensitivity >= 0.8 %}
+                                <li><i class="fas fa-check text-success me-2"></i>Excelente detección de diabetes ({{ "%.1f"|format(results.final_model.metrics.diabetes_sensitivity * 100) }}% sensibilidad)</li>
+                                {% endif %}
+                                {% if results.final_model.metrics.diabetes_specificity >= 0.8 %}
+                                <li><i class="fas fa-check text-success me-2"></i>Baja tasa de falsos positivos ({{ "%.1f"|format(results.final_model.metrics.diabetes_specificity * 100) }}% especificidad)</li>
+                                {% endif %}
+                                <li><i class="fas fa-check text-success me-2"></i>Apto para screening médico con supervisión profesional</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Consideraciones Importantes
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-info-circle text-info me-2"></i>No reemplaza el juicio clínico profesional</li>
+                                <li><i class="fas fa-info-circle text-info me-2"></i>Confirmar diagnóstico con exámenes de laboratorio</li>
+                                <li><i class="fas fa-info-circle text-info me-2"></i>Herramienta de apoyo para identificación temprana</li>
+                                <li><i class="fas fa-info-circle text-info me-2"></i>Validar en población local antes de uso clínico</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Animación de contadores
+    $('.metric-value').each(function() {
+        const $this = $(this);
+        const countTo = parseFloat($this.text());
+        
+        $({ countNum: 0 }).animate({
+            countNum: countTo
+        }, {
+            duration: 2000,
+            easing: 'linear',
+            step: function() {
+                if ($this.text().includes('%')) {
+                    $this.text(Math.floor(this.countNum) + '%');
+                } else if (countTo < 1) {
+                    $this.text(this.countNum.toFixed(3));
+                } else {
+                    $this.text(Math.floor(this.countNum));
+                }
+            },
+            complete: function() {
+                $this.text($this.data('original-value') || $this.text());
+            }
+        });
+        
+        // Guardar valor original para la animación
+        $this.data('original-value', $this.text());
+    });
+    
+    // Verificar estado del modelo periódicamente
+    setInterval(function() {
+        $.get('/api/status')
+            .done(function(data) {
+                if (data.model_loaded) {
+                    $('.badge:contains("Modelo No Disponible")')
+                        .removeClass('bg-warning')
+                        .addClass('bg-success')
+                        .html('<i class="fas fa-check-circle me-2"></i>Modelo Cargado');
+                }
+            });
+    }, 10000);
+});
+</script>
+{% endblock %}

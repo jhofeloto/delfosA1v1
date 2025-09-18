@@ -1,0 +1,11 @@
+[2025-09-17 22:19:41] INFO: Creando modelos...
+[2025-09-17 22:19:41] INFO: 📊 Class weights: {'Diabetes': 4.761904761904762, 'Normal': 0.7246376811594203, 'Prediabetes': 0.7092198581560284}
+[2025-09-17 22:19:41] INFO: ✅ 3 modelos creados
+[2025-09-17 22:19:41] INFO: Evaluando modelos con validación cruzada...
+[2025-09-17 22:19:41] INFO: 🔄 Evaluando: logreg_weighted
+[2025-09-17 22:19:43] INFO: ✅ logreg_weighted: F1=0.4982, Diabetes Sens=0.0000
+[2025-09-17 22:19:43] INFO: 🔄 Evaluando: rf_weighted
+[2025-09-17 22:19:46] INFO: ✅ rf_weighted: F1=0.7908, Diabetes Sens=0.2857
+[2025-09-17 22:19:46] INFO: 🔄 Evaluando: gbc_smote
+[2025-09-17 22:19:51] INFO: ✅ gbc_smote: F1=0.6427, Diabetes Sens=0.0000
+[2025-09-17 22:19:51] INFO: 🏆 Mejor modelo: rf_weighted

@@ -1,0 +1,617 @@
+{% extends "base.html" %}
+
+{% block title %}Predicción Individual - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <!-- Header -->
+    <div class="gradient-bg rounded-3 p-4 mb-4">
+        <h1 class="display-5 fw-bold mb-2">
+            <i class="fas fa-calculator me-3"></i>
+            Predicción Individual de Riesgo DM2
+        </h1>
+        <p class="lead mb-0">
+            Evalúa el riesgo de diabetes de un paciente usando el modelo entrenado
+        </p>
+    </div>
+
+    {% if not model_loaded %}
+    <div class="alert alert-warning" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <strong>Modelo no disponible.</strong> 
+        Ejecuta primero el pipeline para entrenar el modelo.
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Formulario -->
+        <div class="col-lg-8">
+            <!-- Ejemplos de Datos de Prueba -->
+            <div class="card mb-4 border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-vials me-2"></i>
+                        Datos de Prueba - Casos Clínicos de Ejemplo
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Utiliza estos casos clínicos de ejemplo para probar el modelo. Haz clic en cualquier botón para cargar los datos automáticamente.
+                    </p>
+                    <div class="row g-2">
+                        <div class="col-md-6 col-lg-4 mb-2">
+                            <button type="button" class="btn btn-outline-success w-100" onclick="loadTestCase(1)">
+                                <small><strong>Caso 1:</strong> Bajo Riesgo<br>
+                                <span class="text-muted">♀ 32 años, IMC normal</span></small>
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-2">
+                            <button type="button" class="btn btn-outline-warning w-100" onclick="loadTestCase(2)">
+                                <small><strong>Caso 2:</strong> Riesgo Medio<br>
+                                <span class="text-muted">♂ 48 años, sobrepeso</span></small>
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-2">
+                            <button type="button" class="btn btn-outline-danger w-100" onclick="loadTestCase(3)">
+                                <small><strong>Caso 3:</strong> Alto Riesgo<br>
+                                <span class="text-muted">♀ 55 años, obesidad</span></small>
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-2">
+                            <button type="button" class="btn btn-outline-info w-100" onclick="loadTestCase(4)">
+                                <small><strong>Caso 4:</strong> Prediabetes<br>
+                                <span class="text-muted">♂ 61 años, HTA</span></small>
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-2">
+                            <button type="button" class="btn btn-outline-dark w-100" onclick="loadTestCase(5)">
+                                <small><strong>Caso 5:</strong> Múltiples Factores<br>
+                                <span class="text-muted">♀ 67 años, complejo</span></small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prediction-form">
+                <h3 class="mb-4">
+                    <i class="fas fa-user-md me-2"></i>
+                    Datos del Paciente
+                </h3>
+                
+                <form id="predictionForm">
+                    <div class="row">
+                        <!-- Datos Demográficos -->
+                        <div class="col-12 mb-4">
+                            <h5 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-id-card me-2"></i>Información Demográfica
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Edad (años) *</label>
+                            <input type="number" class="form-control" name="edad" required 
+                                   min="18" max="100" placeholder="Ej: 45">
+                            <div class="form-text">Edad del paciente en años completos</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Sexo *</label>
+                            <select class="form-select" name="sexo" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Género</label>
+                            <select class="form-select" name="genero">
+                                <option value="">Seleccionar...</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Régimen de Salud</label>
+                            <select class="form-select" name="regimen">
+                                <option value="">Seleccionar...</option>
+                                <option value="Subsidiado">Subsidiado</option>
+                                <option value="Contributivo">Contributivo</option>
+                                <option value="Especial">Especial</option>
+                            </select>
+                        </div>
+
+                        <!-- Datos Antropométricos -->
+                        <div class="col-12 mb-4 mt-4">
+                            <h5 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-weight me-2"></i>Medidas Antropométricas
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Peso (kg) *</label>
+                            <input type="number" class="form-control" name="peso" required 
+                                   step="0.1" min="30" max="200" placeholder="Ej: 70.5">
+                            <div class="form-text">Peso actual en kilogramos</div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Talla (cm) *</label>
+                            <input type="number" class="form-control" name="talla" required 
+                                   step="0.1" min="120" max="220" placeholder="Ej: 165.0">
+                            <div class="form-text">Altura en centímetros</div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">IMC (calculado)</label>
+                            <input type="number" class="form-control" name="imc" readonly 
+                                   placeholder="Se calcula automáticamente">
+                            <div class="form-text">Índice de Masa Corporal</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Perímetro Abdominal (cm)</label>
+                            <input type="number" class="form-control" name="perimetro_abdominal" 
+                                   step="0.1" min="50" max="150" placeholder="Ej: 90.0">
+                            <div class="form-text">Circunferencia de la cintura</div>
+                        </div>
+
+                        <!-- Datos Clínicos -->
+                        <div class="col-12 mb-4 mt-4">
+                            <h5 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-heartbeat me-2"></i>Datos Clínicos
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Tensión Arterial Sistólica (mmHg)</label>
+                            <input type="number" class="form-control" name="tas" 
+                                   min="80" max="250" placeholder="Ej: 120">
+                            <div class="form-text">Presión sistólica</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Tensión Arterial Diastólica (mmHg)</label>
+                            <input type="number" class="form-control" name="tad" 
+                                   min="40" max="150" placeholder="Ej: 80">
+                            <div class="form-text">Presión diastólica</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Puntaje Total Riesgo</label>
+                            <input type="number" class="form-control" name="puntaje_total" 
+                                   step="0.1" min="0" max="50" placeholder="Ej: 7.5">
+                            <div class="form-text">Puntaje de evaluación de riesgo</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Riesgo DM (numérico)</label>
+                            <input type="number" class="form-control" name="riesgo_dm" 
+                                   step="0.1" min="0" max="10" placeholder="Ej: 4.0">
+                            <div class="form-text">Valor numérico de riesgo</div>
+                        </div>
+
+                        <!-- Estilo de Vida -->
+                        <div class="col-12 mb-4 mt-4">
+                            <h5 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-running me-2"></i>Estilo de Vida
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Realiza Ejercicio</label>
+                            <select class="form-select" name="realiza_ejercicio">
+                                <option value="">Seleccionar...</option>
+                                <option value="SI">Sí</option>
+                                <option value="NO">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Consume Frutas</label>
+                            <select class="form-select" name="frecuencia_frutas">
+                                <option value="">Seleccionar...</option>
+                                <option value="SI">Sí</option>
+                                <option value="NO">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-bold">Consume Cigarrillo</label>
+                            <select class="form-select" name="Consumo_Cigarrillo">
+                                <option value="">Seleccionar...</option>
+                                <option value="0">No</option>
+                                <option value="1">Sí</option>
+                            </select>
+                        </div>
+
+                        <!-- Antecedentes -->
+                        <div class="col-12 mb-4 mt-4">
+                            <h5 class="text-primary border-bottom pb-2">
+                                <i class="fas fa-dna me-2"></i>Antecedentes
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Medicamentos Hipertensión</label>
+                            <select class="form-select" name="medicamentos_hta">
+                                <option value="">Seleccionar...</option>
+                                <option value="SI">Sí</option>
+                                <option value="NO">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Diabetes Familiar</label>
+                            <select class="form-select" name="Dx_Diabetes_Tipo2_Familia">
+                                <option value="">Seleccionar...</option>
+                                <option value="No">No</option>
+                                <option value="Si: Padres o Hermanos">Sí: Padres o Hermanos</option>
+                                <option value="Si: Abuelos, Tios o Primos Hermanos (pero no Padres, Hermanos o Hijos)">Sí: Otros familiares</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-secondary me-md-2" onclick="clearForm()">
+                                    <i class="fas fa-eraser me-2"></i>Limpiar
+                                </button>
+                                <button type="submit" class="btn btn-primary" {{ 'disabled' if not model_loaded }}>
+                                    <i class="fas fa-calculator me-2"></i>Calcular Riesgo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Panel de Resultados -->
+        <div class="col-lg-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>Resultado de la Predicción
+                    </h5>
+                </div>
+                <div class="card-body" id="resultPanel">
+                    <div class="text-center py-5">
+                        <i class="fas fa-calculator fa-4x text-muted mb-3"></i>
+                        <p class="text-muted">
+                            Completa el formulario y haz clic en "Calcular Riesgo" para ver la predicción.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información Adicional -->
+            <div class="card mt-3">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Información Importante
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <small>Los campos marcados con * son obligatorios</small>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-info text-info me-2"></i>
+                            <small>El IMC se calcula automáticamente</small>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-shield-alt text-warning me-2"></i>
+                            <small>Esta predicción es solo orientativa</small>
+                        </li>
+                        <li class="mb-0">
+                            <i class="fas fa-user-md text-primary me-2"></i>
+                            <small>Consulte siempre con un profesional médico</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Cálculo automático de IMC
+    function calculateBMI() {
+        const peso = parseFloat($('input[name="peso"]').val());
+        const talla = parseFloat($('input[name="talla"]').val()) / 100; // convertir a metros
+        
+        if (peso && talla && peso > 0 && talla > 0) {
+            const imc = peso / (talla * talla);
+            $('input[name="imc"]').val(imc.toFixed(2));
+        } else {
+            $('input[name="imc"]').val('');
+        }
+    }
+    
+    // Eventos para cálculo de IMC
+    $('input[name="peso"], input[name="talla"]').on('input', calculateBMI);
+    
+    // Envío del formulario
+    $('#predictionForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {};
+        $(this).serializeArray().forEach(function(item) {
+            formData[item.name] = item.value;
+        });
+        
+        // Mostrar loading
+        $('#resultPanel').html(`
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Calculando...</span>
+                </div>
+                <p class="mt-2 text-muted">Procesando datos...</p>
+            </div>
+        `);
+        
+        // Enviar predicción
+        $.ajax({
+            url: '/api/predict',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                displayResult(response);
+            },
+            error: function(xhr) {
+                const error = xhr.responseJSON?.error || 'Error en la predicción';
+                $('#resultPanel').html(`
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        ${error}
+                    </div>
+                `);
+            }
+        });
+    });
+});
+
+function displayResult(result) {
+    const prediction = result.prediction;
+    const probabilities = result.probabilities;
+    const confidence = result.confidence;
+    const riskLevel = result.risk_level;
+    
+    // Determinar colores y iconos
+    let badgeClass, iconClass, riskColor;
+    if (prediction === 'Normal') {
+        badgeClass = 'bg-success';
+        iconClass = 'fa-check-circle';
+        riskColor = 'success';
+    } else if (prediction === 'Prediabetes') {
+        badgeClass = 'bg-warning';
+        iconClass = 'fa-exclamation-triangle';
+        riskColor = 'warning';
+    } else {
+        badgeClass = 'bg-danger';
+        iconClass = 'fa-times-circle';
+        riskColor = 'danger';
+    }
+    
+    // Crear barras de probabilidad
+    let probBars = '';
+    Object.keys(probabilities).forEach(className => {
+        const prob = probabilities[className];
+        const percentage = (prob * 100).toFixed(1);
+        let barColor = className === 'Normal' ? 'success' : 
+                      className === 'Prediabetes' ? 'warning' : 'danger';
+        
+        probBars += `
+            <div class="mb-2">
+                <div class="d-flex justify-content-between">
+                    <small class="fw-bold">${className}</small>
+                    <small>${percentage}%</small>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-${barColor}" 
+                         style="width: ${percentage}%"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    const html = `
+        <div class="text-center mb-4">
+            <div class="mb-3">
+                <i class="fas ${iconClass} fa-4x text-${riskColor}"></i>
+            </div>
+            <h4 class="mb-2">Predicción:</h4>
+            <span class="badge ${badgeClass} fs-6 px-3 py-2">${prediction}</span>
+        </div>
+        
+        <div class="mb-4">
+            <h6 class="fw-bold mb-3">Probabilidades por Clase:</h6>
+            ${probBars}
+        </div>
+        
+        <div class="row text-center">
+            <div class="col-6">
+                <div class="border-end">
+                    <div class="h5 text-${riskColor} mb-1">${riskLevel}</div>
+                    <small class="text-muted">Nivel de Riesgo</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="h5 text-primary mb-1">${(confidence * 100).toFixed(1)}%</div>
+                <small class="text-muted">Confianza</small>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-3">
+            <small>
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Recuerde:</strong> Esta predicción es orientativa. 
+                Consulte con un médico para confirmación diagnóstica.
+            </small>
+        </div>
+    `;
+    
+    $('#resultPanel').html(html);
+    
+    // Mostrar notificación
+    showAlert(`Predicción completada: ${prediction}`, riskColor === 'success' ? 'success' : 
+              riskColor === 'warning' ? 'warning' : 'danger');
+}
+
+function clearForm() {
+    $('#predictionForm')[0].reset();
+    $('#resultPanel').html(`
+        <div class="text-center py-5">
+            <i class="fas fa-calculator fa-4x text-muted mb-3"></i>
+            <p class="text-muted">
+                Completa el formulario y haz clic en "Calcular Riesgo" para ver la predicción.
+            </p>
+        </div>
+    `);
+}
+
+function loadTestCase(caseNumber) {
+    // Limpiar formulario primero
+    clearForm();
+    
+    // Definir los casos de prueba
+    const testCases = {
+        1: {
+            // Caso 1: Mujer joven, bajo riesgo
+            edad: 32,
+            sexo: 'F',
+            genero: 'Femenino',
+            regimen: 'Contributivo',
+            peso: 58.5,
+            talla: 165,
+            perimetro_abdominal: 78,
+            tas: 110,
+            tad: 70,
+            puntaje_total: 2.5,
+            riesgo_dm: 1.2,
+            realiza_ejercicio: 'SI',
+            frecuencia_frutas: 'SI',
+            Consumo_Cigarrillo: '0',
+            medicamentos_hta: 'NO',
+            Dx_Diabetes_Tipo2_Familia: 'No'
+        },
+        2: {
+            // Caso 2: Hombre mediana edad, sobrepeso, riesgo medio
+            edad: 48,
+            sexo: 'M',
+            genero: 'Masculino',
+            regimen: 'Contributivo',
+            peso: 82,
+            talla: 175,
+            perimetro_abdominal: 95,
+            tas: 135,
+            tad: 85,
+            puntaje_total: 5.8,
+            riesgo_dm: 3.2,
+            realiza_ejercicio: 'NO',
+            frecuencia_frutas: 'SI',
+            Consumo_Cigarrillo: '0',
+            medicamentos_hta: 'NO',
+            Dx_Diabetes_Tipo2_Familia: 'Si: Abuelos, Tios o Primos Hermanos (pero no Padres, Hermanos o Hijos)'
+        },
+        3: {
+            // Caso 3: Mujer mayor, obesidad, alto riesgo
+            edad: 55,
+            sexo: 'F',
+            genero: 'Femenino',
+            regimen: 'Subsidiado',
+            peso: 95,
+            talla: 160,
+            perimetro_abdominal: 105,
+            tas: 145,
+            tad: 90,
+            puntaje_total: 8.7,
+            riesgo_dm: 5.8,
+            realiza_ejercicio: 'NO',
+            frecuencia_frutas: 'NO',
+            Consumo_Cigarrillo: '1',
+            medicamentos_hta: 'SI',
+            Dx_Diabetes_Tipo2_Familia: 'Si: Padres o Hermanos'
+        },
+        4: {
+            // Caso 4: Hombre mayor, hipertensión, prediabetes probable
+            edad: 61,
+            sexo: 'M',
+            genero: 'Masculino',
+            regimen: 'Contributivo',
+            peso: 88,
+            talla: 172,
+            perimetro_abdominal: 102,
+            tas: 155,
+            tad: 95,
+            puntaje_total: 7.2,
+            riesgo_dm: 4.5,
+            realiza_ejercicio: 'NO',
+            frecuencia_frutas: 'SI',
+            Consumo_Cigarrillo: '0',
+            medicamentos_hta: 'SI',
+            Dx_Diabetes_Tipo2_Familia: 'Si: Padres o Hermanos'
+        },
+        5: {
+            // Caso 5: Mujer mayor, múltiples factores de riesgo
+            edad: 67,
+            sexo: 'F',
+            genero: 'Femenino',
+            regimen: 'Especial',
+            peso: 92,
+            talla: 158,
+            perimetro_abdominal: 108,
+            tas: 165,
+            tad: 100,
+            puntaje_total: 9.4,
+            riesgo_dm: 7.1,
+            realiza_ejercicio: 'NO',
+            frecuencia_frutas: 'NO',
+            Consumo_Cigarrillo: '1',
+            medicamentos_hta: 'SI',
+            Dx_Diabetes_Tipo2_Familia: 'Si: Padres o Hermanos'
+        }
+    };
+    
+    const testCase = testCases[caseNumber];
+    if (!testCase) return;
+    
+    // Llenar todos los campos del formulario
+    Object.keys(testCase).forEach(field => {
+        const element = document.querySelector(`[name="${field}"]`);
+        if (element) {
+            element.value = testCase[field];
+            
+            // Disparar evento change para campos que lo necesiten
+            if (element.type === 'select-one' || field === 'peso' || field === 'talla') {
+                element.dispatchEvent(new Event('change'));
+            }
+        }
+    });
+    
+    // Mostrar mensaje de confirmación
+    const caseNames = {
+        1: 'Bajo Riesgo - Mujer joven saludable',
+        2: 'Riesgo Medio - Hombre con sobrepeso',
+        3: 'Alto Riesgo - Mujer con obesidad',
+        4: 'Prediabetes - Hombre hipertenso',
+        5: 'Múltiples Factores - Caso complejo'
+    };
+    
+    showAlert(`Datos cargados: ${caseNames[caseNumber]}`, 'success');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{
+  "logistic_regression": {
+    "C": 58.15735772363201,
+    "solver": "lbfgs",
+    "max_iter": 120,
+    "class_weight": "balanced"
+  },
+  "random_forest": {
+    "n_estimators": 154,
+    "max_depth": 10,
+    "min_samples_split": 8,
+    "min_samples_leaf": 5,
+    "class_weight": "balanced"
+  },
+  "gradient_boosting": {
+    "n_estimators": 83,
+    "learning_rate": 0.23215734272444352,
+    "max_depth": 4,
+    "min_samples_split": 9,
+    "subsample": 0.9149030267279313
+  }
+}

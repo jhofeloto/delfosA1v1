@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Documentación API - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="gradient-bg rounded-3 p-4 mb-4">
+        <h1 class="display-5 fw-bold mb-2">
+            <i class="fas fa-book me-3"></i>
+            Documentación de la API
+        </h1>
+        <p class="lead mb-0">Guía completa para usar la API REST del sistema DM2</p>
+    </div>
+
+    <!-- Endpoints -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Endpoints Disponibles</h5>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="apiAccordion">
+                        
+                        <!-- Status -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingStatus">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStatus">
+                                    <span class="badge bg-info me-2">GET</span> /api/status
+                                </button>
+                            </h2>
+                            <div id="collapseStatus" class="accordion-collapse collapse show" data-bs-parent="#apiAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Descripción:</strong> Obtiene el estado actual del sistema</p>
+                                    <p><strong>Respuesta:</strong></p>
+                                    <pre><code>{
+  "status": "online",
+  "model_loaded": true,
+  "results_available": true,
+  "execution_timestamp": "2024-09-17T22:19:33",
+  "dataset_size": [100, 51]
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Predict -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPredict">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePredict">
+                                    <span class="badge bg-success me-2">POST</span> /api/predict
+                                </button>
+                            </h2>
+                            <div id="collapsePredict" class="accordion-collapse collapse" data-bs-parent="#apiAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Descripción:</strong> Realiza predicción individual</p>
+                                    <p><strong>Parámetros (JSON):</strong></p>
+                                    <pre><code>{
+  "edad": 45,
+  "sexo": "M",
+  "peso": 80.5,
+  "talla": 175.0,
+  "imc": 26.2,
+  "tas": 130,
+  "tad": 85,
+  ...
+}</code></pre>
+                                    <p><strong>Respuesta:</strong></p>
+                                    <pre><code>{
+  "prediction": "Prediabetes",
+  "probabilities": {
+    "Normal": 0.3,
+    "Prediabetes": 0.6,
+    "Diabetes": 0.1
+  },
+  "confidence": 0.6,
+  "risk_level": "Medio"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metrics -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingMetrics">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMetrics">
+                                    <span class="badge bg-info me-2">GET</span> /api/metrics
+                                </button>
+                            </h2>
+                            <div id="collapseMetrics" class="accordion-collapse collapse" data-bs-parent="#apiAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Descripción:</strong> Obtiene métricas del modelo actual</p>
+                                    <p><strong>Respuesta:</strong></p>
+                                    <pre><code>{
+  "metrics": {
+    "f1_macro": 0.746,
+    "balanced_accuracy": 0.821,
+    "diabetes_sensitivity": 1.000,
+    "diabetes_specificity": 0.946
+  },
+  "model_name": "logistic_regression",
+  "timestamp": "2024-09-17T22:20:55"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Plots -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPlots">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlots">
+                                    <span class="badge bg-warning me-2">GET</span> /api/plot/{type}
+                                </button>
+                            </h2>
+                            <div id="collapsePlots" class="accordion-collapse collapse" data-bs-parent="#apiAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Descripción:</strong> Genera visualizaciones dinámicas</p>
+                                    <p><strong>Tipos disponibles:</strong></p>
+                                    <ul>
+                                        <li><code>metrics_comparison</code> - Comparación de métricas</li>
+                                        <li><code>class_distribution</code> - Distribución de clases</li>
+                                        <li><code>performance_evolution</code> - Evolución de performance</li>
+                                    </ul>
+                                    <p><strong>Respuesta:</strong></p>
+                                    <pre><code>{
+  "plot": "{plotly_json_object}"
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejemplos de Uso -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Ejemplo Python</h5>
+                </div>
+                <div class="card-body">
+                    <pre><code>import requests
+
+# Predicción
+data = {
+    "edad": 45,
+    "sexo": "M", 
+    "peso": 80.5,
+    "talla": 175.0
+}
+
+response = requests.post(
+    "http://localhost:5000/api/predict",
+    json=data
+)
+
+result = response.json()
+print(f"Predicción: {result['prediction']}")
+</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Ejemplo JavaScript</h5>
+                </div>
+                <div class="card-body">
+                    <pre><code>// Predicción con fetch
+const data = {
+    edad: 45,
+    sexo: "M",
+    peso: 80.5,
+    talla: 175.0
+};
+
+fetch('/api/predict', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(result => {
+    console.log('Predicción:', result.prediction);
+});
+</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

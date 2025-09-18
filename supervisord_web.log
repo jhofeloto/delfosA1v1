@@ -1,0 +1,6 @@
+2025-09-17 22:50:24,162 INFO RPC interface 'supervisor' initialized
+2025-09-17 22:50:24,162 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2025-09-17 22:50:24,165 INFO daemonizing the supervisord process
+2025-09-17 22:50:24,166 INFO supervisord started with pid 7947
+2025-09-17 22:50:24,325 INFO spawned: 'dm2_webapp' with pid 7949
+2025-09-17 22:50:25,340 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

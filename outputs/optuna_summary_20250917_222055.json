@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-09-17T22:20:55.896764",
+  "best_model": "logistic_regression",
+  "best_score": 0.29999999999985,
+  "optimization_config": {
+    "n_trials": 10,
+    "cv_folds": 5,
+    "primary_metric": "diabetes_sensitivity",
+    "secondary_metric": "f1_macro"
+  },
+  "best_parameters": {
+    "logistic_regression": {
+      "C": 58.15735772363201,
+      "solver": "lbfgs",
+      "max_iter": 120,
+      "class_weight": "balanced"
+    },
+    "random_forest": {
+      "n_estimators": 154,
+      "max_depth": 10,
+      "min_samples_split": 8,
+      "min_samples_leaf": 5,
+      "class_weight": "balanced"
+    },
+    "gradient_boosting": {
+      "n_estimators": 83,
+      "learning_rate": 0.23215734272444352,
+      "max_depth": 4,
+      "min_samples_split": 9,
+      "subsample": 0.9149030267279313
+    }
+  }
+}

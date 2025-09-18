@@ -1,0 +1,50 @@
+🔍 ANÁLISIS EXPLORATORIO DE DATOS - DATASET DM2
+============================================================
+
+📊 Dataset shape: (100, 51)
+🔢 Numeric columns: 12
+📝 Categorical columns: 21
+
+🎯 DISTRIBUCIÓN DEL TARGET
+========================================
+Normal: 46 (46.0%)
+Prediabetes: 47 (47.0%)
+Diabetes: 7 (7.0%)
+
+🔍 VALORES FALTANTES
+========================================
+fecha_nacimiento: 1 (1.0%)
+
+📊 Estadísticas numéricas guardadas en: /home/user/webapp/outputs/numeric_statistics.csv
+
+🔗 CORRELACIONES ALTAS (|r| > 0.7)
+==================================================
+Edad_Años ↔ edad: 0.922
+imc ↔ peso: 0.863
+puntaje_total ↔ riesgo_dm: 0.857
+
+📈 Heatmap de correlaciones guardado en: /home/user/webapp/outputs/correlation_heatmap.png
+
+🎯 VARIABLES SIGNIFICATIVAMENTE ASOCIADAS AL TARGET (p < 0.05)
+======================================================================
+puntaje_total (numeric): F-stat=11.603, p=0.0000
+edad (numeric): F-stat=10.383, p=0.0001
+Edad_Años (numeric): F-stat=7.401, p=0.0010
+riesgo_dm (numeric): F-stat=4.500, p=0.0135
+tas (numeric): F-stat=4.214, p=0.0176
+
+🚨 OUTLIERS DETECTADOS (IQR method)
+========================================
+tas: 13 (13.0%)
+tad: 3 (3.0%)
+talla: 3 (3.0%)
+imc: 1 (1.0%)
+puntaje_total: 1 (1.0%)
+
+📊 Visualizaciones guardadas en: /home/user/webapp/outputs
+
+📋 RESUMEN DE CALIDAD DE DATOS
+==================================================
+Total de valores faltantes: 1 (0.02%)
+Filas completas: 99 (99.0%)
+Filas duplicadas: 0

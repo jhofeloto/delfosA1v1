@@ -1,0 +1,4 @@
+model,best_score,n_trials
+logistic_regression,0.29999999999985,10
+random_forest,0.09999999999994999,10
+gradient_boosting,0.0,10

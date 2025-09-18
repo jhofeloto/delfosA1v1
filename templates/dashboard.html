@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Detallado - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="gradient-bg rounded-3 p-4 mb-4">
+        <h1 class="display-5 fw-bold mb-2">
+            <i class="fas fa-tachometer-alt me-3"></i>
+            Dashboard Detallado
+        </h1>
+        <p class="lead mb-0">Vista completa de métricas, comparaciones y análisis del modelo</p>
+    </div>
+
+    <!-- Información de Ejecución -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Información de Ejecución</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Timestamp:</strong> {{ data.timestamp }}</p>
+                            <p><strong>Dataset:</strong> {{ data.execution_info.shape[0] if data.execution_info.shape else 'N/A' }} pacientes</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Modelo Final:</strong> {{ data.final_model.name if data.final_model else 'N/A' }}</p>
+                            <p><strong>Variables:</strong> {{ data.execution_info.shape[1] if data.execution_info.shape else 'N/A' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas Detalladas -->
+    {% if data.final_model and data.final_model.metrics %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3>Métricas del Modelo Final</h3>
+        </div>
+        {% for metric, value in data.final_model.metrics.items() %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">{{ metric|replace('_', ' ')|title }}</h5>
+                    <p class="card-text display-6">
+                        {% if value < 1 %}
+                            {{ "%.3f"|format(value) }}
+                        {% else %}
+                            {{ "%.0f"|format(value) }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Comparación de Resultados -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Comparación Baseline</h5>
+                </div>
+                <div class="card-body">
+                    {% if data.baseline_results %}
+                        <pre class="text-small">{{ data.baseline_results|tojsonpretty }}</pre>
+                    {% else %}
+                        <p class="text-muted">No hay resultados baseline disponibles</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Resultados de Optimización</h5>
+                </div>
+                <div class="card-body">
+                    {% if data.optimization_results %}
+                        <pre class="text-small">{{ data.optimization_results|tojsonpretty }}</pre>
+                    {% else %}
+                        <p class="text-muted">No hay resultados de optimización disponibles</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

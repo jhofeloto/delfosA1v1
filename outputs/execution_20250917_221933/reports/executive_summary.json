@@ -1,0 +1,197 @@
+{
+  "execution_timestamp": "20250917_221933",
+  "dataset_info": {
+    "shape": [
+      100,
+      51
+    ],
+    "target_distribution": {
+      "Prediabetes": 47,
+      "Normal": 46,
+      "Diabetes": 7
+    }
+  },
+  "pipeline_config": {
+    "run_eda": true,
+    "run_feature_engineering": true,
+    "run_hyperparameter_tuning": true,
+    "optuna_trials": 10,
+    "enable_advanced_models": false
+  },
+  "final_model": {
+    "name": "logistic_regression",
+    "metrics": {
+      "f1_macro": 0.7455732753257562,
+      "f1_weighted": 0.7486491356785214,
+      "balanced_accuracy": 0.8213074313906876,
+      "precision_per_class": [
+        0.7708333333333334,
+        0.775,
+        0.5833333333333334
+      ],
+      "recall_per_class": [
+        0.8043478260869565,
+        0.6595744680851063,
+        1.0
+      ],
+      "f1_per_class": [
+        0.7872340425531915,
+        0.7126436781609196,
+        0.7368421052631579
+      ],
+      "support_per_class": [
+        46,
+        47,
+        7
+      ],
+      "diabetes_sensitivity": 0.9999999999998571,
+      "diabetes_specificity": 0.9462365591397748,
+      "diabetes_ppv": 0.5833333333332847,
+      "diabetes_npv": 0.9999999999999887,
+      "diabetes_precision": 0.5833333333333334,
+      "diabetes_recall": 1.0,
+      "diabetes_f1": 0.7368421052631579,
+      "diabetes_auc": 0.1490015360983103
+    }
+  },
+  "baseline_comparison": {
+    "logreg_weighted": {
+      "f1_macro": 0.49824032176973354,
+      "f1_weighted": 0.6948265460030165,
+      "balanced_accuracy": 0.5160345359235277,
+      "precision_per_class": [
+        0.7777777777777778,
+        0.6727272727272727,
+        0.0
+      ],
+      "recall_per_class": [
+        0.7608695652173914,
+        0.7872340425531915,
+        0.0
+      ],
+      "f1_per_class": [
+        0.7692307692307693,
+        0.7254901960784313,
+        0.0
+      ],
+      "support_per_class": [
+        46,
+        47,
+        7
+      ],
+      "diabetes_sensitivity": 0.0,
+      "diabetes_specificity": 0.9999999999999893,
+      "diabetes_ppv": 0.0,
+      "diabetes_npv": 0.9299999999999907,
+      "diabetes_precision": 0.0,
+      "diabetes_recall": 0.0,
+      "diabetes_f1": 0.0,
+      "diabetes_auc": 0.6989247311827956,
+      "cv_f1_macro_mean": 0.43393179919495706,
+      "cv_f1_macro_std": 0.12988361804379037,
+      "cv_balanced_accuracy_mean": 0.44370370370370377,
+      "cv_balanced_accuracy_std": 0.129097319762347
+    },
+    "rf_weighted": {
+      "f1_macro": 0.7908224221588277,
+      "f1_weighted": 0.9273893643478897,
+      "balanced_accuracy": 0.7548125633232016,
+      "precision_per_class": [
+        0.9787234042553191,
+        0.9019607843137255,
+        1.0
+      ],
+      "recall_per_class": [
+        1.0,
+        0.9787234042553191,
+        0.2857142857142857
+      ],
+      "f1_per_class": [
+        0.989247311827957,
+        0.9387755102040817,
+        0.4444444444444444
+      ],
+      "support_per_class": [
+        46,
+        47,
+        7
+      ],
+      "diabetes_sensitivity": 0.2857142857142449,
+      "diabetes_specificity": 0.9999999999999893,
+      "diabetes_ppv": 0.9999999999995,
+      "diabetes_npv": 0.9489795918367251,
+      "diabetes_precision": 1.0,
+      "diabetes_recall": 0.2857142857142857,
+      "diabetes_f1": 0.4444444444444444,
+      "diabetes_auc": 0.5391705069124424,
+      "cv_f1_macro_mean": 0.440216967539622,
+      "cv_f1_macro_std": 0.05900283745262749,
+      "cv_balanced_accuracy_mean": 0.45925925925925937,
+      "cv_balanced_accuracy_std": 0.059674471292215814
+    },
+    "gbc_smote": {
+      "f1_macro": 0.6427394512500896,
+      "f1_weighted": 0.8964753922200731,
+      "balanced_accuracy": 0.6666666666666666,
+      "precision_per_class": [
+        0.9583333333333334,
+        0.9038461538461539,
+        0.0
+      ],
+      "recall_per_class": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "f1_per_class": [
+        0.9787234042553191,
+        0.9494949494949495,
+        0.0
+      ],
+      "support_per_class": [
+        46,
+        47,
+        7
+      ],
+      "diabetes_sensitivity": 0.0,
+      "diabetes_specificity": 0.9999999999999893,
+      "diabetes_ppv": 0.0,
+      "diabetes_npv": 0.9299999999999907,
+      "diabetes_precision": 0.0,
+      "diabetes_recall": 0.0,
+      "diabetes_f1": 0.0,
+      "diabetes_auc": 0.5514592933947773,
+      "cv_f1_macro_mean": NaN,
+      "cv_f1_macro_std": NaN,
+      "cv_balanced_accuracy_mean": NaN,
+      "cv_balanced_accuracy_std": NaN
+    }
+  },
+  "optimization_results": {
+    "best_model": "logistic_regression",
+    "best_score": 0.29999999999985,
+    "best_params": {
+      "logistic_regression": {
+        "C": 58.15735772363201,
+        "solver": "lbfgs",
+        "max_iter": 120,
+        "class_weight": "balanced"
+      },
+      "random_forest": {
+        "n_estimators": 154,
+        "max_depth": 10,
+        "min_samples_split": 8,
+        "min_samples_leaf": 5,
+        "class_weight": "balanced"
+      },
+      "gradient_boosting": {
+        "n_estimators": 83,
+        "learning_rate": 0.23215734272444352,
+        "max_depth": 4,
+        "min_samples_split": 9,
+        "subsample": 0.9149030267279313
+      }
+    }
+  },
+  "execution_directory": "/home/user/webapp/outputs/execution_20250917_221933"
+}

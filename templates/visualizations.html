@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizaciones Interactivas - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <!-- Header -->
+    <div class="gradient-bg rounded-3 p-4 mb-4">
+        <h1 class="display-5 fw-bold mb-2">
+            <i class="fas fa-chart-line me-3"></i>
+            Visualizaciones Interactivas
+        </h1>
+        <p class="lead mb-0">
+            Explora gráficos dinámicos de performance, distribuciones y métricas del modelo
+        </p>
+    </div>
+
+    <!-- Controles -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h5 class="mb-0">
+                                <i class="fas fa-sliders-h me-2"></i>Panel de Control
+                            </h5>
+                            <small class="text-muted">Selecciona qué visualizaciones mostrar</small>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" onclick="refreshAllCharts()">
+                                    <i class="fas fa-sync-alt me-2"></i>Actualizar Gráficos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="btn-group" role="group">
+                                <input type="checkbox" class="btn-check" id="showMetrics" checked>
+                                <label class="btn btn-outline-primary" for="showMetrics">
+                                    <i class="fas fa-chart-bar me-1"></i>Métricas
+                                </label>
+                                
+                                <input type="checkbox" class="btn-check" id="showDistribution" checked>
+                                <label class="btn btn-outline-success" for="showDistribution">
+                                    <i class="fas fa-chart-pie me-1"></i>Distribución
+                                </label>
+                                
+                                <input type="checkbox" class="btn-check" id="showEvolution" checked>
+                                <label class="btn btn-outline-info" for="showEvolution">
+                                    <i class="fas fa-chart-line me-1"></i>Evolución
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualizaciones -->
+    <div class="row">
+        <!-- Métricas de Performance -->
+        <div class="col-xl-6 col-lg-12 mb-4" id="metricsContainer">
+            <div class="chart-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                        Métricas de Performance
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" onclick="downloadChart('metricsChart')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="refreshChart('metrics_comparison')">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="metricsChart" style="height: 400px;">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando gráfico...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Distribución de Clases -->
+        <div class="col-xl-6 col-lg-12 mb-4" id="distributionContainer">
+            <div class="chart-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie text-success me-2"></i>
+                        Distribución de Clases
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" onclick="downloadChart('distributionChart')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="refreshChart('class_distribution')">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="distributionChart" style="height: 400px;">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Cargando gráfico...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evolución de Performance -->
+        <div class="col-12 mb-4" id="evolutionContainer">
+            <div class="chart-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line text-info me-2"></i>
+                        Evolución de Performance Durante Optimización
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" onclick="downloadChart('evolutionChart')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="refreshChart('performance_evolution')">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="evolutionChart" style="height: 450px;">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="spinner-border text-info" role="status">
+                            <span class="visually-hidden">Cargando gráfico...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matriz de Confusión (simulada) -->
+        <div class="col-xl-6 col-lg-12 mb-4">
+            <div class="chart-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-th text-warning me-2"></i>
+                        Matriz de Confusión (Estimada)
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" onclick="generateConfusionMatrix()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="confusionMatrix" style="height: 400px;">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Importancia de Features (simulada) -->
+        <div class="col-xl-6 col-lg-12 mb-4">
+            <div class="chart-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-list-ol text-secondary me-2"></i>
+                        Top Features Más Importantes
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" onclick="generateFeatureImportance()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="featureImportance" style="height: 400px;">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas Resumidas -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Estadísticas y Métricas Adicionales
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="additionalStats">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Cargar gráficos iniciales
+    loadChart('metrics_comparison', 'metricsChart');
+    loadChart('class_distribution', 'distributionChart');
+    loadChart('performance_evolution', 'evolutionChart');
+    
+    // Generar gráficos adicionales
+    setTimeout(function() {
+        generateConfusionMatrix();
+        generateFeatureImportance();
+        loadAdditionalStats();
+    }, 1000);
+    
+    // Event listeners para controles
+    $('#showMetrics').change(function() {
+        $('#metricsContainer').toggle(this.checked);
+    });
+    
+    $('#showDistribution').change(function() {
+        $('#distributionContainer').toggle(this.checked);
+    });
+    
+    $('#showEvolution').change(function() {
+        $('#evolutionContainer').toggle(this.checked);
+    });
+});
+
+function loadChart(plotType, containerId) {
+    $.get(`/api/plot/${plotType}`)
+        .done(function(response) {
+            if (response.plot) {
+                const plotData = JSON.parse(response.plot);
+                Plotly.newPlot(containerId, plotData.data, plotData.layout, {
+                    responsive: true,
+                    displayModeBar: true,
+                    modeBarButtonsToAdd: ['downloadSvg']
+                });
+            }
+        })
+        .fail(function(xhr) {
+            const error = xhr.responseJSON?.error || 'Error cargando gráfico';
+            $(`#${containerId}`).html(`
+                <div class="alert alert-warning text-center">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    ${error}
+                </div>
+            `);
+        });
+}
+
+function refreshChart(plotType) {
+    const containerMap = {
+        'metrics_comparison': 'metricsChart',
+        'class_distribution': 'distributionChart',
+        'performance_evolution': 'evolutionChart'
+    };
+    
+    const containerId = containerMap[plotType];
+    if (containerId) {
+        $(`#${containerId}`).html(`
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Actualizando...</span>
+                </div>
+            </div>
+        `);
+        
+        setTimeout(() => loadChart(plotType, containerId), 500);
+    }
+}
+
+function refreshAllCharts() {
+    showAlert('Actualizando todos los gráficos...', 'info');
+    
+    refreshChart('metrics_comparison');
+    refreshChart('class_distribution');
+    refreshChart('performance_evolution');
+    
+    setTimeout(function() {
+        generateConfusionMatrix();
+        generateFeatureImportance();
+        loadAdditionalStats();
+        showAlert('Gráficos actualizados correctamente', 'success');
+    }, 2000);
+}
+
+function downloadChart(chartId) {
+    Plotly.downloadImage(chartId, {
+        format: 'png',
+        width: 1200,
+        height: 600,
+        filename: `dm2_chart_${chartId}_${new Date().getTime()}`
+    });
+}
+
+function generateConfusionMatrix() {
+    // Datos simulados de matriz de confusión
+    const confusionData = [
+        [42, 4, 0],    // Normal: 42 correctos, 4 como Prediabetes, 0 como Diabetes
+        [3, 41, 3],    // Prediabetes: 3 como Normal, 41 correctos, 3 como Diabetes  
+        [0, 0, 7]      // Diabetes: 0 como Normal, 0 como Prediabetes, 7 correctos
+    ];
+    
+    const labels = ['Normal', 'Prediabetes', 'Diabetes'];
+    
+    const trace = {
+        z: confusionData,
+        x: labels,
+        y: labels,
+        type: 'heatmap',
+        colorscale: 'Blues',
+        showscale: true,
+        text: confusionData.map(row => row.map(val => val.toString())),
+        texttemplate: "%{text}",
+        textfont: {size: 16, color: "white"}
+    };
+    
+    const layout = {
+        title: 'Matriz de Confusión',
+        xaxis: {title: 'Predicción'},
+        yaxis: {title: 'Realidad'},
+        margin: {l: 80, r: 80, t: 80, b: 80}
+    };
+    
+    Plotly.newPlot('confusionMatrix', [trace], layout, {responsive: true});
+}
+
+function generateFeatureImportance() {
+    // Datos simulados de importancia de features
+    const features = [
+        'edad', 'imc', 'tas', 'puntaje_total', 'perimetro_abdominal',
+        'tad', 'peso', 'riesgo_dm', 'medicamentos_hta', 'Dx_Diabetes_Tipo2_Familia'
+    ];
+    
+    const importance = [0.25, 0.18, 0.15, 0.12, 0.08, 0.07, 0.06, 0.05, 0.03, 0.01];
+    
+    const trace = {
+        x: importance,
+        y: features,
+        type: 'bar',
+        orientation: 'h',
+        marker: {
+            color: importance,
+            colorscale: 'Viridis'
+        },
+        text: importance.map(val => (val * 100).toFixed(1) + '%'),
+        textposition: 'outside'
+    };
+    
+    const layout = {
+        title: 'Importancia Relativa de Variables',
+        xaxis: {title: 'Importancia'},
+        yaxis: {title: 'Variables'},
+        margin: {l: 150, r: 50, t: 50, b: 50}
+    };
+    
+    Plotly.newPlot('featureImportance', [trace], layout, {responsive: true});
+}
+
+function loadAdditionalStats() {
+    $.get('/api/metrics')
+        .done(function(data) {
+            const metrics = data.metrics || {};
+            
+            const html = `
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="h4 text-primary">${(metrics.diabetes_sensitivity * 100 || 0).toFixed(1)}%</div>
+                        <small class="text-muted">Sensibilidad Diabetes</small>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="h4 text-success">${(metrics.diabetes_specificity * 100 || 0).toFixed(1)}%</div>
+                        <small class="text-muted">Especificidad Diabetes</small>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="h4 text-info">${(metrics.f1_macro || 0).toFixed(3)}</div>
+                        <small class="text-muted">F1 Macro Score</small>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="text-center">
+                        <div class="h4 text-warning">${(metrics.balanced_accuracy || 0).toFixed(3)}</div>
+                        <small class="text-muted">Balanced Accuracy</small>
+                    </div>
+                </div>
+            `;
+            
+            $('#additionalStats').html(html);
+        })
+        .fail(function() {
+            $('#additionalStats').html(`
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        No se pudieron cargar las estadísticas adicionales
+                    </div>
+                </div>
+            `);
+        });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,13 @@
+{
+  "dataset_shape": [
+    100,
+    51
+  ],
+  "target_distribution": {
+    "Prediabetes": 47,
+    "Normal": 46,
+    "Diabetes": 7
+  },
+  "missing_values": "1",
+  "duplicate_rows": "0"
+}

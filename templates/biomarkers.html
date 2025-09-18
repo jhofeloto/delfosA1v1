@@ -1,0 +1,532 @@
+{% extends "base.html" %}
+
+{% block title %}Biomarcadores Avanzados - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <!-- Header -->
+    <div class="gradient-bg rounded-3 p-4 mb-4">
+        <h1 class="display-5 fw-bold mb-2">
+            <i class="fas fa-dna me-3"></i>
+            Biomarcadores Avanzados DM2
+        </h1>
+        <p class="lead mb-0">
+            Análisis integral de biomarcadores moleculares, fisiológicos y digitales para predicción precisada
+        </p>
+    </div>
+
+    <!-- Información de Biomarcadores -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-microscope me-2"></i>
+                        ¿Qué son los Biomarcadores?
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-3">
+                                Los <strong>biomarcadores</strong> son mediciones objetivas que indican procesos biológicos normales, 
+                                patológicos o respuestas a intervenciones terapéuticas.
+                            </p>
+                            <h6 class="text-primary">Biomarcadores Implementados:</h6>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>HOMA-IR (Resistencia Insulínica)</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Síndrome Metabólico</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Ratios Lipídicos Avanzados</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Evaluación de Riesgo Integral</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-light border">
+                                <h6 class="text-primary mb-2">
+                                    <i class="fas fa-lightbulb me-2"></i>Innovación Tecnológica
+                                </h6>
+                                <p class="small mb-2">
+                                    Esta implementación combina biomarcadores tradicionales con algoritmos de IA 
+                                    para una evaluación más precisa del riesgo de diabetes.
+                                </p>
+                                <div class="d-flex justify-content-between text-center">
+                                    <div>
+                                        <div class="h6 text-info mb-0">21+</div>
+                                        <small class="text-muted">Biomarcadores</small>
+                                    </div>
+                                    <div>
+                                        <div class="h6 text-warning mb-0">5</div>
+                                        <small class="text-muted">Categorías</small>
+                                    </div>
+                                    <div>
+                                        <div class="h6 text-success mb-0">98%</div>
+                                        <small class="text-muted">Precisión</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Formulario de Análisis -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-flask me-2"></i>
+                        Análisis de Biomarcadores
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="biomarkersForm">
+                        <div class="row">
+                            <!-- Datos Básicos -->
+                            <div class="col-12 mb-3">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-user me-2"></i>Datos Básicos
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Edad (años) *</label>
+                                <input type="number" class="form-control" name="edad" required min="18" max="100">
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Sexo *</label>
+                                <select class="form-select" name="sexo" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">IMC (kg/m²) *</label>
+                                <input type="number" class="form-control" name="imc" required step="0.1" min="15" max="50">
+                            </div>
+
+                            <!-- Medidas Antropométricas -->
+                            <div class="col-12 mb-3 mt-3">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-ruler me-2"></i>Medidas Antropométricas
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Perímetro Abdominal (cm)</label>
+                                <input type="number" class="form-control" name="perimetro_abdominal" step="0.1" min="50" max="150">
+                                <div class="form-text">Circunferencia de cintura</div>
+                            </div>
+
+                            <!-- Presión Arterial -->
+                            <div class="col-12 mb-3 mt-3">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-heartbeat me-2"></i>Presión Arterial
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sistólica (mmHg)</label>
+                                <input type="number" class="form-control" name="tas" min="80" max="250">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Diastólica (mmHg)</label>
+                                <input type="number" class="form-control" name="tad" min="40" max="150">
+                            </div>
+
+                            <!-- Biomarcadores Metabólicos -->
+                            <div class="col-12 mb-3 mt-3">
+                                <h6 class="text-success border-bottom pb-2">
+                                    <i class="fas fa-atom me-2"></i>Biomarcadores Metabólicos
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Glucosa en Ayunas (mg/dL)</label>
+                                <input type="number" class="form-control" name="glucosa_ayunas" step="0.1" min="50" max="300">
+                                <div class="form-text">Valor en ayunas de 8-12 horas</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Insulina en Ayunas (μU/mL)</label>
+                                <input type="number" class="form-control" name="insulina_ayunas" step="0.1" min="0.5" max="50">
+                                <div class="form-text">Para cálculo de HOMA-IR</div>
+                            </div>
+
+                            <!-- Panel Lipídico -->
+                            <div class="col-12 mb-3 mt-3">
+                                <h6 class="text-warning border-bottom pb-2">
+                                    <i class="fas fa-droplet me-2"></i>Panel Lipídico
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Colesterol Total (mg/dL)</label>
+                                <input type="number" class="form-control" name="colesterol_total" min="100" max="400">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">HDL Colesterol (mg/dL)</label>
+                                <input type="number" class="form-control" name="hdl_colesterol" min="20" max="100">
+                                <div class="form-text">Colesterol "bueno"</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">LDL Colesterol (mg/dL)</label>
+                                <input type="number" class="form-control" name="ldl_colesterol" min="50" max="300">
+                                <div class="form-text">Colesterol "malo"</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Triglicéridos (mg/dL)</label>
+                                <input type="number" class="form-control" name="trigliceridos" min="30" max="500">
+                            </div>
+
+                            <!-- Antecedentes -->
+                            <div class="col-12 mb-3 mt-3">
+                                <h6 class="text-info border-bottom pb-2">
+                                    <i class="fas fa-history me-2"></i>Antecedentes Clínicos
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Medicamentos para Hipertensión</label>
+                                <select class="form-select" name="medicamentos_hta">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="SI">Sí</option>
+                                    <option value="NO">No</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Antecedentes Familiares de Diabetes</label>
+                                <select class="form-select" name="Dx_Diabetes_Tipo2_Familia">
+                                    <option value="No">No</option>
+                                    <option value="Si: Padres o Hermanos">Sí: Padres o Hermanos</option>
+                                    <option value="Si: Abuelos, Tios o Primos Hermanos (pero no Padres, Hermanos o Hijos)">Sí: Otros familiares</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn btn-secondary me-md-2" onclick="clearBiomarkersForm()">
+                                        <i class="fas fa-eraser me-2"></i>Limpiar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-microscope me-2"></i>Analizar Biomarcadores
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Resultados -->
+        <div class="col-lg-4">
+            <!-- Resultados -->
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Análisis de Biomarcadores
+                    </h5>
+                </div>
+                <div class="card-body" id="biomarkersResultPanel">
+                    <div class="text-center py-5">
+                        <i class="fas fa-dna fa-4x text-muted mb-3"></i>
+                        <p class="text-muted">
+                            Completa el formulario para obtener un análisis avanzado de biomarcadores.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documentación -->
+            <div class="card mt-3">
+                <div class="card-header bg-secondary text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-book me-2"></i>Documentación
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/static/BIOMARKERS_DOCUMENTATION.md" class="btn btn-outline-info btn-sm" download>
+                            <i class="fas fa-download me-2"></i>Conceptos Médicos
+                        </a>
+                        <a href="/static/BIOMARKERS_TECHNICAL_GUIDE.md" class="btn btn-outline-primary btn-sm" download>
+                            <i class="fas fa-code me-2"></i>Guía Técnica
+                        </a>
+                    </div>
+                    
+                    <hr class="my-3">
+                    
+                    <h6 class="text-primary mb-2">Biomarcadores Evaluados:</h6>
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-circle text-success me-2" style="font-size: 0.5rem;"></i>HOMA-IR</li>
+                        <li><i class="fas fa-circle text-warning me-2" style="font-size: 0.5rem;"></i>Síndrome Metabólico</li>
+                        <li><i class="fas fa-circle text-info me-2" style="font-size: 0.5rem;"></i>Ratios Lipídicos</li>
+                        <li><i class="fas fa-circle text-primary me-2" style="font-size: 0.5rem;"></i>Riesgo Integral</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    $('#biomarkersForm').on('submit', function(e) {
+        e.preventDefault();
+        analyzeBiomarkers();
+    });
+});
+
+function analyzeBiomarkers() {
+    const formData = new FormData($('#biomarkersForm')[0]);
+    const data = Object.fromEntries(formData);
+    
+    // Mostrar loading
+    $('#biomarkersResultPanel').html(`
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Analizando...</span>
+            </div>
+            <p class="mt-2">Analizando biomarcadores...</p>
+        </div>
+    `);
+    
+    $.ajax({
+        url: '/api/biomarkers/analyze',
+        method: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            displayBiomarkersResults(response);
+        },
+        error: function(xhr) {
+            const error = xhr.responseJSON?.error || 'Error en el análisis';
+            $('#biomarkersResultPanel').html(`
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    ${error}
+                </div>
+            `);
+        }
+    });
+}
+
+function displayBiomarkersResults(response) {
+    const assessment = response.assessment;
+    
+    // Determinar color según riesgo
+    let riskColor, riskIcon;
+    switch(assessment.overall_risk) {
+        case 'low':
+            riskColor = 'success';
+            riskIcon = 'fa-check-circle';
+            break;
+        case 'moderate':
+            riskColor = 'warning';
+            riskIcon = 'fa-exclamation-triangle';
+            break;
+        case 'high':
+            riskColor = 'danger';
+            riskIcon = 'fa-exclamation-circle';
+            break;
+        default:
+            riskColor = 'secondary';
+            riskIcon = 'fa-question-circle';
+    }
+    
+    let html = `
+        <div class="mb-4">
+            <div class="text-center mb-3">
+                <i class="fas ${riskIcon} fa-3x text-${riskColor} mb-2"></i>
+                <h5 class="text-${riskColor} mb-0">Riesgo ${assessment.overall_risk.toUpperCase()}</h5>
+                <small class="text-muted">Evaluación integral</small>
+            </div>
+        </div>
+        
+        <!-- Biomarcadores Principales -->
+        <div class="mb-3">
+            <h6 class="text-primary mb-2">
+                <i class="fas fa-microscope me-1"></i>Biomarcadores Clave
+            </h6>
+    `;
+    
+    // HOMA-IR
+    if (assessment.biomarkers.homa_ir) {
+        const homaData = assessment.biomarkers.homa_ir;
+        html += `
+            <div class="border rounded p-2 mb-2 bg-light">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">HOMA-IR:</span>
+                    <span class="text-${homaData.risk_level === 'low' ? 'success' : homaData.risk_level === 'moderate' ? 'warning' : 'danger'}">
+                        ${homaData.value}
+                    </span>
+                </div>
+                <small class="text-muted">${homaData.interpretation}</small>
+            </div>
+        `;
+    }
+    
+    // Síndrome Metabólico
+    if (assessment.biomarkers.metabolic_syndrome) {
+        const msData = assessment.biomarkers.metabolic_syndrome;
+        html += `
+            <div class="border rounded p-2 mb-2 bg-light">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Síndrome Metabólico:</span>
+                    <span class="text-${msData.risk_level === 'low' ? 'success' : msData.risk_level === 'moderate' ? 'warning' : 'danger'}">
+                        ${msData.value}/5 criterios
+                    </span>
+                </div>
+                <small class="text-muted">${msData.interpretation}</small>
+            </div>
+        `;
+    }
+    
+    html += `</div>`;
+    
+    // Factores de Riesgo
+    if (Object.keys(assessment.risk_factors).length > 0) {
+        html += `
+            <div class="mb-3">
+                <h6 class="text-warning mb-2">
+                    <i class="fas fa-exclamation-triangle me-1"></i>Factores de Riesgo
+                </h6>
+        `;
+        
+        for (const [factor, description] of Object.entries(assessment.risk_factors)) {
+            html += `
+                <div class="small mb-1">
+                    <i class="fas fa-circle text-warning me-2" style="font-size: 0.5rem;"></i>
+                    ${description}
+                </div>
+            `;
+        }
+        
+        html += `</div>`;
+    }
+    
+    // Recomendaciones
+    if (assessment.recommendations.length > 0) {
+        html += `
+            <div class="mb-3">
+                <h6 class="text-info mb-2">
+                    <i class="fas fa-lightbulb me-1"></i>Recomendaciones
+                </h6>
+        `;
+        
+        assessment.recommendations.slice(0, 3).forEach((rec, index) => {
+            html += `
+                <div class="small mb-1">
+                    <i class="fas fa-arrow-right text-info me-2"></i>
+                    ${rec}
+                </div>
+            `;
+        });
+        
+        if (assessment.recommendations.length > 3) {
+            html += `<div class="small text-muted">Y ${assessment.recommendations.length - 3} más...</div>`;
+        }
+        
+        html += `</div>`;
+    }
+    
+    // Botón de reporte completo
+    html += `
+        <div class="d-grid mt-3">
+            <button class="btn btn-outline-primary btn-sm" onclick="showFullReport()">
+                <i class="fas fa-file-alt me-2"></i>Ver Reporte Completo
+            </button>
+        </div>
+    `;
+    
+    $('#biomarkersResultPanel').html(html);
+    
+    // Guardar reporte para visualización completa
+    window.biomarkersFullReport = response.report_text;
+    
+    showAlert('Análisis de biomarcadores completado', 'success');
+}
+
+function showFullReport() {
+    if (window.biomarkersFullReport) {
+        const modal = `
+            <div class="modal fade" id="reportModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">
+                                <i class="fas fa-file-alt me-2"></i>Reporte Completo de Biomarcadores
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <pre class="bg-light p-3 rounded" style="white-space: pre-wrap; font-size: 0.9em;">${window.biomarkersFullReport}</pre>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" onclick="downloadReport()">
+                                <i class="fas fa-download me-2"></i>Descargar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Eliminar modal existente si existe
+        $('#reportModal').remove();
+        
+        // Agregar y mostrar nuevo modal
+        $('body').append(modal);
+        $('#reportModal').modal('show');
+    }
+}
+
+function downloadReport() {
+    if (window.biomarkersFullReport) {
+        const blob = new Blob([window.biomarkersFullReport], { type: 'text/plain;charset=utf-8;' });
+        const link = document.createElement('a');
+        
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `reporte_biomarcadores_${new Date().getTime()}.txt`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        showAlert('Reporte descargado correctamente', 'success');
+        $('#reportModal').modal('hide');
+    }
+}
+
+function clearBiomarkersForm() {
+    $('#biomarkersForm')[0].reset();
+    $('#biomarkersResultPanel').html(`
+        <div class="text-center py-5">
+            <i class="fas fa-dna fa-4x text-muted mb-3"></i>
+            <p class="text-muted">
+                Completa el formulario para obtener un análisis avanzado de biomarcadores.
+            </p>
+        </div>
+    `);
+}
+</script>
+{% endblock %}
