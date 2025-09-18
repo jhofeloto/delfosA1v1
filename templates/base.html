@@ -9,92 +9,88 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Modern Design System -->
+    <link href="{{ url_for('static', filename='css/modern-design-system.css') }}?v=2024091803" rel="stylesheet">
     <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     
     <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
+        /* Legacy compatibility styles - override with new design system */
         .card-metric {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--card);
+            color: var(--card-foreground);
         }
         
         .card-metric:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
         
         .metric-value {
             font-size: 2.5rem;
-            font-weight: bold;
+            font-weight: 700;
             margin: 0;
+            background: linear-gradient(135deg, var(--primary), var(--chart-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .metric-label {
-            color: #6c757d;
-            font-size: 0.9rem;
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 500;
         }
-        
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-        
-        .status-online { background-color: #28a745; }
-        .status-offline { background-color: #dc3545; }
-        .status-warning { background-color: #ffc107; }
         
         .sidebar {
-            background-color: #f8f9fa;
-            border-right: 1px solid #e9ecef;
+            background-color: var(--sidebar);
+            border-right: 1px solid var(--sidebar-border);
             min-height: 100vh;
         }
         
-        .nav-link {
-            color: #495057;
-            border-radius: 8px;
-            margin: 2px 0;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            background-color: #667eea;
-            color: white;
-        }
-        
         .prediction-form {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 2rem;
+            box-shadow: var(--shadow-md);
         }
         
-        .risk-low { color: #28a745; }
-        .risk-medium { color: #ffc107; }
-        .risk-high { color: #dc3545; }
+        .risk-low { color: var(--accent); }
+        .risk-medium { color: var(--chart-5); }
+        .risk-high { color: var(--destructive); }
         
-        .chart-container {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
+        /* Enhanced footer */
+        footer {
+            background-color: var(--card) !important;
+            color: var(--card-foreground) !important;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
     
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="animate-fade-in">
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" title="Alternar modo oscuro">
+        <i class="fas fa-moon" id="darkModeIcon"></i>
+    </button>
+
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark gradient-bg">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('index') }}">
                 <i class="fas fa-heartbeat me-2"></i>
@@ -157,14 +153,14 @@
     </nav>
 
     <!-- Contenido Principal -->
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid animate-slide-up">
+        <div class="row space-y-6">
             {% block content %}{% endblock %}
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-light text-center py-4 mt-5">
+    <footer class="text-center py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -186,6 +182,8 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Theme System -->
+    <script src="{{ url_for('static', filename='js/theme-system.js') }}"></script>
     
     <!-- Sistema de alertas -->
     <script>
@@ -221,6 +219,49 @@
         
         // Ejecutar verificación periódica
         setInterval(checkSystemStatus, 30000);
+        
+        // Dark Mode Toggle Functionality
+        function initDarkMode() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeIcon = document.getElementById('darkModeIcon');
+            const body = document.body;
+            
+            // Check for saved dark mode preference
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            
+            // Apply initial theme
+            if (isDarkMode) {
+                body.classList.add('dark');
+                darkModeIcon.className = 'fas fa-sun';
+            } else {
+                darkModeIcon.className = 'fas fa-moon';
+            }
+            
+            // Toggle function
+            darkModeToggle.addEventListener('click', () => {
+                const isCurrentlyDark = body.classList.contains('dark');
+                
+                if (isCurrentlyDark) {
+                    body.classList.remove('dark');
+                    darkModeIcon.className = 'fas fa-moon';
+                    localStorage.setItem('darkMode', 'false');
+                } else {
+                    body.classList.add('dark');
+                    darkModeIcon.className = 'fas fa-sun';
+                    localStorage.setItem('darkMode', 'true');
+                }
+                
+                // Trigger a custom event for any components that need to respond to theme changes
+                window.dispatchEvent(new CustomEvent('themeChanged', {
+                    detail: { isDark: !isCurrentlyDark }
+                }));
+            });
+        }
+        
+        // Initialize dark mode on page load
+        $(document).ready(function() {
+            initDarkMode();
+        });
     </script>
     
     {% block extra_js %}{% endblock %}

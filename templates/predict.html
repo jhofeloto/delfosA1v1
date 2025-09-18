@@ -5,8 +5,8 @@
 {% block content %}
 <div class="col-12">
     <!-- Header -->
-    <div class="gradient-bg rounded-3 p-4 mb-4">
-        <h1 class="display-5 fw-bold mb-2">
+    <div class="gradient-bg rounded-3 p-4 mb-4 glass animate-slide-up">
+        <h1 class="display-5 fw-bold mb-2 gradient-text">
             <i class="fas fa-calculator me-3"></i>
             Predicción Individual de Riesgo DM2
         </h1>
@@ -27,7 +27,7 @@
         <!-- Formulario -->
         <div class="col-lg-8">
             <!-- Ejemplos de Datos de Prueba -->
-            <div class="card mb-4 border-success">
+            <div class="card mb-4 border-success animate-fade-in">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
                         <i class="fas fa-vials me-2"></i>
@@ -41,31 +41,31 @@
                     </p>
                     <div class="row g-2">
                         <div class="col-md-6 col-lg-4 mb-2">
-                            <button type="button" class="btn btn-outline-success w-100" onclick="loadTestCase(1)">
+                            <button type="button" class="btn btn-outline-primary w-100" onclick="loadTestCase(1)">
                                 <small><strong>Caso 1:</strong> Bajo Riesgo<br>
                                 <span class="text-muted">♀ 32 años, IMC normal</span></small>
                             </button>
                         </div>
                         <div class="col-md-6 col-lg-4 mb-2">
-                            <button type="button" class="btn btn-outline-warning w-100" onclick="loadTestCase(2)">
+                            <button type="button" class="btn btn-secondary w-100" onclick="loadTestCase(2)">
                                 <small><strong>Caso 2:</strong> Riesgo Medio<br>
                                 <span class="text-muted">♂ 48 años, sobrepeso</span></small>
                             </button>
                         </div>
                         <div class="col-md-6 col-lg-4 mb-2">
-                            <button type="button" class="btn btn-outline-danger w-100" onclick="loadTestCase(3)">
+                            <button type="button" class="btn btn-destructive w-100" onclick="loadTestCase(3)">
                                 <small><strong>Caso 3:</strong> Alto Riesgo<br>
                                 <span class="text-muted">♀ 55 años, obesidad</span></small>
                             </button>
                         </div>
                         <div class="col-md-6 col-lg-4 mb-2">
-                            <button type="button" class="btn btn-outline-info w-100" onclick="loadTestCase(4)">
+                            <button type="button" class="btn btn-accent w-100" onclick="loadTestCase(4)">
                                 <small><strong>Caso 4:</strong> Prediabetes<br>
                                 <span class="text-muted">♂ 61 años, HTA</span></small>
                             </button>
                         </div>
                         <div class="col-md-6 col-lg-4 mb-2">
-                            <button type="button" class="btn btn-outline-dark w-100" onclick="loadTestCase(5)">
+                            <button type="button" class="btn btn-outline-primary w-100" onclick="loadTestCase(5)">
                                 <small><strong>Caso 5:</strong> Múltiples Factores<br>
                                 <span class="text-muted">♀ 67 años, complejo</span></small>
                             </button>

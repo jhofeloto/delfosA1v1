@@ -1,0 +1,90 @@
+{
+  "name": "Default OKLCH Theme",
+  "description": "Sistema de diseño moderno basado en OKLCH",
+  "version": "1.0.0",
+  "colors": {
+    "light": {
+      "background": "oklch(0.9821 0 0)",
+      "foreground": "oklch(0.3211 0 0)",
+      "card": "oklch(1.0000 0 0)",
+      "card-foreground": "oklch(0.3211 0 0)",
+      "popover": "oklch(1.0000 0 0)",
+      "popover-foreground": "oklch(0.3211 0 0)",
+      "primary": "oklch(0.5676 0.2021 283.0838)",
+      "primary-foreground": "oklch(1.0000 0 0)",
+      "secondary": "oklch(0.8214 0.0720 249.3482)",
+      "secondary-foreground": "oklch(0.3211 0 0)",
+      "muted": "oklch(0.8202 0.0213 91.6163)",
+      "muted-foreground": "oklch(0.5382 0 0)",
+      "accent": "oklch(0.6475 0.0642 117.4260)",
+      "accent-foreground": "oklch(1.0000 0 0)",
+      "destructive": "oklch(0.6368 0.2078 25.3313)",
+      "destructive-foreground": "oklch(1.0000 0 0)",
+      "border": "oklch(0.8699 0 0)",
+      "input": "oklch(0.8699 0 0)",
+      "ring": "oklch(0.5676 0.2021 283.0838)",
+      "chart-1": "oklch(0.5676 0.2021 283.0838)",
+      "chart-2": "oklch(0.5261 0.1705 314.6534)",
+      "chart-3": "oklch(0.3390 0.1793 301.6848)",
+      "chart-4": "oklch(0.6746 0.1414 261.3380)",
+      "chart-5": "oklch(0.5880 0.0993 245.7394)"
+    },
+    "dark": {
+      "background": "oklch(0.2303 0.0125 264.2926)",
+      "foreground": "oklch(0.9219 0 0)",
+      "card": "oklch(0.3210 0.0078 223.6661)",
+      "card-foreground": "oklch(0.9219 0 0)",
+      "popover": "oklch(0.3210 0.0078 223.6661)",
+      "popover-foreground": "oklch(0.9219 0 0)",
+      "primary": "oklch(0.5676 0.2021 283.0838)",
+      "primary-foreground": "oklch(1.0000 0 0)",
+      "secondary": "oklch(0.3390 0.1793 301.6848)",
+      "secondary-foreground": "oklch(0.9219 0 0)",
+      "muted": "oklch(0.3867 0 0)",
+      "muted-foreground": "oklch(0.7155 0 0)",
+      "accent": "oklch(0.6746 0.1414 261.3380)",
+      "accent-foreground": "oklch(0.9219 0 0)",
+      "destructive": "oklch(0.6368 0.2078 25.3313)",
+      "destructive-foreground": "oklch(1.0000 0 0)",
+      "border": "oklch(0.3867 0 0)",
+      "input": "oklch(0.3867 0 0)",
+      "ring": "oklch(0.5676 0.2021 283.0838)",
+      "chart-1": "oklch(0.5676 0.2021 283.0838)",
+      "chart-2": "oklch(0.5261 0.1705 314.6534)",
+      "chart-3": "oklch(0.3390 0.1793 301.6848)",
+      "chart-4": "oklch(0.6746 0.1414 261.3380)",
+      "chart-5": "oklch(0.5880 0.0993 245.7394)"
+    }
+  },
+  "typography": {
+    "font-sans": "Montserrat, sans-serif",
+    "font-serif": "Playfair Display, serif",
+    "font-mono": "Source Code Pro, monospace",
+    "sizes": {
+      "h1": "clamp(2.5rem, 5vw, 3.5rem)",
+      "h2": "clamp(2rem, 4vw, 2.75rem)",
+      "h3": "clamp(1.5rem, 3vw, 2rem)",
+      "h4": "clamp(1.25rem, 2.5vw, 1.5rem)",
+      "h5": "clamp(1.125rem, 2vw, 1.25rem)",
+      "h6": "clamp(1rem, 1.5vw, 1.125rem)",
+      "body": "1rem",
+      "lead": "1.25rem"
+    }
+  },
+  "spacing": {
+    "radius": "0.5rem",
+    "spacing-base": "0.25rem"
+  },
+  "shadows": {
+    "sm": "0px 5px 10px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10)",
+    "md": "0px 5px 10px -2px hsl(0 0% 0% / 0.10), 0px 2px 4px -3px hsl(0 0% 0% / 0.10)",
+    "lg": "0px 5px 10px -2px hsl(0 0% 0% / 0.10), 0px 4px 6px -3px hsl(0 0% 0% / 0.10)",
+    "xl": "0px 5px 10px -2px hsl(0 0% 0% / 0.10), 0px 8px 10px -3px hsl(0 0% 0% / 0.10)"
+  },
+  "animations": {
+    "duration-fast": "0.2s",
+    "duration-normal": "0.3s",
+    "duration-slow": "0.5s",
+    "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  }
+}

@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}Demostración Sistema de Temas - Pipeline DM2{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <!-- Header -->
+    <div class="gradient-bg rounded-3 p-4 mb-4 glass animate-slide-up">
+        <h1 class="display-4 fw-bold mb-2 gradient-text">
+            <i class="fas fa-palette me-3"></i>
+            Sistema de Temas Dinámicos
+        </h1>
+        <p class="lead mb-0">
+            Cambia estilos, colores y tipografía automáticamente usando JSON y CSS variables
+        </p>
+    </div>
+
+    <!-- Instrucciones -->
+    <div class="alert alert-info animate-fade-in mb-4" role="alert">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>¡Prueba el selector de temas!</strong> Haz clic en el ícono de paleta 🎨 en la esquina superior derecha para cambiar entre diferentes temas. Los cambios se aplican instantáneamente.
+    </div>
+
+    <!-- Ejemplos de Componentes -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">🎨 Ejemplos de Componentes Temáticos</h3>
+        </div>
+
+        <!-- Tarjetas de Métricas -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card card-metric h-100 animate-slide-up">
+                <div class="card-body text-center">
+                    <div class="metric-value metric-value--success">
+                        95.2%
+                    </div>
+                    <div class="metric-label">Precisión</div>
+                    <small class="metric-description">Rendimiento del modelo</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card card-metric h-100 animate-slide-up">
+                <div class="card-body text-center">
+                    <div class="metric-value metric-value--warning">
+                        68.4%
+                    </div>
+                    <div class="metric-label">Sensibilidad</div>
+                    <small class="metric-description">Detección de casos</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card card-metric h-100 animate-slide-up">
+                <div class="card-body text-center">
+                    <div class="metric-value metric-value--critical">
+                        15.1%
+                    </div>
+                    <div class="metric-label tooltip-trigger">
+                        VPP Crítico
+                        <div class="tooltip-content">
+                            <strong>Valor Predictivo Positivo:</strong> Este valor bajo indica problemas serios en la predicción de casos positivos.
+                        </div>
+                    </div>
+                    <small class="metric-description">Requiere atención inmediata</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card card-metric h-100 animate-slide-up">
+                <div class="card-body text-center">
+                    <div class="metric-value metric-value--success">
+                        1,250
+                    </div>
+                    <div class="metric-label">Pacientes</div>
+                    <small class="metric-description">Dataset completo</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de Ejemplo -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="mb-3">Botones con Estilos Dinámicos</h4>
+            <div class="d-flex gap-3 flex-wrap">
+                <button class="btn btn-primary">
+                    <i class="fas fa-play me-2"></i>Acción Primaria
+                </button>
+                <button class="btn btn-secondary-outline">
+                    <i class="fas fa-chart-line me-2"></i>Acción Secundaria
+                </button>
+                <button class="btn btn-accent">
+                    <i class="fas fa-star me-2"></i>Acción Destacada
+                </button>
+                <button class="btn btn-destructive">
+                    <i class="fas fa-trash me-2"></i>Acción Destructiva
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información de Temas -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100 animate-fade-in">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cog me-2"></i>Temas Disponibles
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="themesList">
+                        <div class="d-flex align-items-center justify-content-center py-4">
+                            <div class="spinner-border text-primary me-3" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <span>Cargando temas disponibles...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+            <div class="card h-100 animate-fade-in">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-code me-2"></i>Configuración JSON
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">
+                        Los temas se definen mediante archivos JSON que especifican:
+                    </p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Colores OKLCH para mejor percepción</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Tipografía responsiva y moderna</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Sombras y efectos personalizados</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Animaciones y transiciones</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Modo oscuro automático</li>
+                    </ul>
+                    <a href="/static/themes/theme-template.json" target="_blank" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-download me-1"></i>Ver Plantilla JSON
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Características Técnicas -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card animate-slide-up">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-magic me-2"></i>Características del Sistema de Temas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">
+                                <i class="fas fa-rocket me-2"></i>Tecnología Avanzada
+                            </h6>
+                            <ul>
+                                <li><strong>OKLCH Color Space:</strong> Colores más uniformes y perceptualmente correctos</li>
+                                <li><strong>CSS Custom Properties:</strong> Variables dinámicas que cambian en tiempo real</li>
+                                <li><strong>JavaScript API:</strong> Control programático completo de temas</li>
+                                <li><strong>Persistencia Local:</strong> Los temas se guardan automáticamente</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-accent">
+                                <i class="fas fa-palette me-2"></i>Personalización Total
+                            </h6>
+                            <ul>
+                                <li><strong>Temas Predefinidos:</strong> Default, Medical Blue, Warm Clinical</li>
+                                <li><strong>Modo Oscuro:</strong> Soporte completo automático</li>
+                                <li><strong>Tipografía Dinámica:</strong> Fuentes y tamaños configurables</li>
+                                <li><strong>Efectos Visuales:</strong> Sombras, animaciones y transiciones</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Cargar y mostrar información de temas
+async function loadThemeInfo() {
+    try {
+        const response = await fetch('/api/themes');
+        const data = await response.json();
+        
+        if (data.success) {
+            const themesList = document.getElementById('themesList');
+            
+            let html = '<div class="list-group list-group-flush">';
+            
+            data.themes.forEach(theme => {
+                const isActive = theme.id === data.current;
+                html += `
+                    <div class="list-group-item ${isActive ? 'active' : ''}">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">${theme.name}</h6>
+                                <p class="mb-1 small">${theme.description}</p>
+                                <small>v${theme.version}</small>
+                            </div>
+                            ${isActive ? '<i class="fas fa-check-circle text-success"></i>' : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            themesList.innerHTML = html;
+        }
+    } catch (error) {
+        document.getElementById('themesList').innerHTML = 
+            '<div class="alert alert-danger">Error cargando información de temas</div>';
+    }
+}
+
+// Cargar información al inicializar
+document.addEventListener('DOMContentLoaded', loadThemeInfo);
+</script>
+{% endblock %}

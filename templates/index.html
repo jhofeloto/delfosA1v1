@@ -4,11 +4,22 @@
 
 {% block content %}
 <div class="col-12">
+    {% if demo_mode %}
+    <!-- Demo Mode Banner -->
+    <div class="alert alert-warning animate-fade-in mb-4" role="alert">
+        <i class="fas fa-vials me-2"></i>
+        <strong>Modo Demostración UX:</strong> Esta página muestra métricas simuladas con problemas críticos para demostrar las mejoras de interfaz de usuario implementadas.
+        <a href="{{ url_for('index') }}" class="btn btn-sm btn-outline-primary ms-3">
+            <i class="fas fa-arrow-left me-1"></i>Volver al Dashboard Real
+        </a>
+    </div>
+    {% endif %}
+
     <!-- Header -->
-    <div class="gradient-bg rounded-3 p-4 mb-4">
+    <div class="gradient-bg rounded-3 p-4 mb-4 glass animate-slide-up">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h1 class="display-4 fw-bold mb-2">
+                <h1 class="display-4 fw-bold mb-2 gradient-text">
                     <i class="fas fa-heartbeat me-3"></i>
                     Pipeline DM2 - Dashboard Principal
                 </h1>
@@ -46,11 +57,17 @@
         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
             <div class="card card-metric h-100">
                 <div class="card-body text-center">
-                    <div class="metric-value text-success">
-                        {{ "%.1f"|format(results.final_model.metrics.diabetes_sensitivity * 100) }}%
+                    {% set sensitivity = results.final_model.metrics.diabetes_sensitivity * 100 %}
+                    <div class="metric-value {% if sensitivity < 50 %}metric-value--critical{% elif sensitivity < 80 %}metric-value--warning{% else %}metric-value--success{% endif %}">
+                        {{ "%.1f"|format(sensitivity) }}%
                     </div>
-                    <div class="metric-label">Sensibilidad Diabetes</div>
-                    <small class="text-muted">Detección de casos</small>
+                    <div class="metric-label tooltip-trigger">
+                        Sensibilidad Diabetes
+                        <div class="tooltip-content">
+                            <strong>Sensibilidad:</strong> Capacidad del modelo para detectar correctamente casos de diabetes. Valores bajos indican que el modelo no identifica muchos casos reales de diabetes.
+                        </div>
+                    </div>
+                    <small class="metric-description">Detección de casos verdaderos</small>
                 </div>
             </div>
         </div>
@@ -58,11 +75,17 @@
         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
             <div class="card card-metric h-100">
                 <div class="card-body text-center">
-                    <div class="metric-value text-info">
-                        {{ "%.1f"|format(results.final_model.metrics.diabetes_specificity * 100) }}%
+                    {% set specificity = results.final_model.metrics.diabetes_specificity * 100 %}
+                    <div class="metric-value {% if specificity >= 80 %}metric-value--success{% else %}metric-value--warning{% endif %}">
+                        {{ "%.1f"|format(specificity) }}%
                     </div>
-                    <div class="metric-label">Especificidad</div>
-                    <small class="text-muted">Verdaderos negativos</small>
+                    <div class="metric-label tooltip-trigger">
+                        Especificidad
+                        <div class="tooltip-content">
+                            <strong>Especificidad:</strong> Capacidad del modelo para identificar correctamente casos sin diabetes. Valores altos indican pocos falsos positivos.
+                        </div>
+                    </div>
+                    <small class="metric-description">Verdaderos negativos identificados</small>
                 </div>
             </div>
         </div>
@@ -70,11 +93,17 @@
         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
             <div class="card card-metric h-100">
                 <div class="card-body text-center">
-                    <div class="metric-value text-primary">
-                        {{ "%.3f"|format(results.final_model.metrics.f1_macro) }}
+                    {% set f1_macro = results.final_model.metrics.f1_macro %}
+                    <div class="metric-value {% if f1_macro >= 0.8 %}metric-value--success{% elif f1_macro >= 0.6 %}metric-value--warning{% else %}metric-value--critical{% endif %}">
+                        {{ "%.3f"|format(f1_macro) }}
                     </div>
-                    <div class="metric-label">F1 Macro</div>
-                    <small class="text-muted">Balance general</small>
+                    <div class="metric-label tooltip-trigger">
+                        F1 Macro
+                        <div class="tooltip-content">
+                            <strong>F1 Macro:</strong> Promedio aritmético del rendimiento del modelo en todas las clases (Normal, Prediabetes, Diabetes). Valores cercanos a 1.0 indican mejor rendimiento balanceado.
+                        </div>
+                    </div>
+                    <small class="metric-description">Rendimiento balanceado general</small>
                 </div>
             </div>
         </div>
@@ -82,11 +111,17 @@
         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
             <div class="card card-metric h-100">
                 <div class="card-body text-center">
-                    <div class="metric-value text-warning">
-                        {{ "%.1f"|format(results.final_model.metrics.diabetes_ppv * 100) }}%
+                    {% set ppv = results.final_model.metrics.diabetes_ppv * 100 %}
+                    <div class="metric-value {% if ppv >= 70 %}metric-value--success{% elif ppv >= 50 %}metric-value--warning{% else %}metric-value--critical{% endif %}">
+                        {{ "%.1f"|format(ppv) }}%
                     </div>
-                    <div class="metric-label">PPV Diabetes</div>
-                    <small class="text-muted">Precisión positivos</small>
+                    <div class="metric-label tooltip-trigger">
+                        Valor Predictivo Positivo
+                        <div class="tooltip-content">
+                            <strong>VPP (PPV):</strong> De todos los casos que el modelo predice como diabetes, qué porcentaje realmente tiene diabetes. Indica confiabilidad de predicciones positivas.
+                        </div>
+                    </div>
+                    <small class="metric-description">Confiabilidad predicciones positivas</small>
                 </div>
             </div>
         </div>
@@ -94,11 +129,17 @@
         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
             <div class="card card-metric h-100">
                 <div class="card-body text-center">
-                    <div class="metric-value text-secondary">
-                        {{ "%.3f"|format(results.final_model.metrics.balanced_accuracy) }}
+                    {% set balanced_acc = results.final_model.metrics.balanced_accuracy %}
+                    <div class="metric-value {% if balanced_acc >= 0.8 %}metric-value--success{% elif balanced_acc >= 0.6 %}metric-value--warning{% else %}metric-value--critical{% endif %}">
+                        {{ "%.3f"|format(balanced_acc) }}
                     </div>
-                    <div class="metric-label">Balanced Acc</div>
-                    <small class="text-muted">Precisión balanceada</small>
+                    <div class="metric-label tooltip-trigger">
+                        Precisión Balanceada
+                        <div class="tooltip-content">
+                            <strong>Precisión Balanceada:</strong> Promedio de sensibilidad y especificidad. Métrica más robusta para datasets desbalanceados. Valores cercanos a 1.0 son mejores.
+                        </div>
+                    </div>
+                    <small class="metric-description">Rendimiento equilibrado</small>
                 </div>
             </div>
         </div>
@@ -106,11 +147,11 @@
         <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
             <div class="card card-metric h-100">
                 <div class="card-body text-center">
-                    <div class="metric-value text-dark">
+                    <div class="metric-value metric-value--success">
                         {{ results.dataset_info.shape[0] if results.dataset_info else 0 }}
                     </div>
                     <div class="metric-label">Pacientes</div>
-                    <small class="text-muted">Dataset size</small>
+                    <small class="metric-description">Tamaño del dataset</small>
                 </div>
             </div>
         </div>
@@ -118,9 +159,9 @@
     {% endif %}
 
     <!-- Información del Modelo -->
-    <div class="row mb-4">
+    <div class="row mb-4 space-y-4">
         <div class="col-lg-6 mb-3">
-            <div class="card h-100">
+            <div class="card h-100 animate-fade-in">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">
                         <i class="fas fa-robot me-2"></i>Información del Modelo
@@ -173,7 +214,7 @@
         </div>
         
         <div class="col-lg-6 mb-3">
-            <div class="card h-100">
+            <div class="card h-100 animate-fade-in">
                 <div class="card-header bg-info text-white">
                     <h5 class="mb-0">
                         <i class="fas fa-database me-2"></i>Información del Dataset
@@ -229,14 +270,14 @@
         </div>
         
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card text-center h-100 card-metric">
+            <div class="card text-center h-100 card-metric animate-slide-up">
                 <div class="card-body">
                     <div class="mb-3">
                         <i class="fas fa-calculator fa-3x text-primary"></i>
                     </div>
                     <h5 class="card-title">Predicción Individual</h5>
                     <p class="card-text">Evalúa el riesgo de diabetes de un paciente específico.</p>
-                    <a href="{{ url_for('predict_form') }}" class="btn btn-primary">
+                    <a href="{{ url_for('predict_form') }}" class="btn btn-primary btn-enhanced">
                         <i class="fas fa-arrow-right me-2"></i>Predecir
                     </a>
                 </div>
@@ -244,14 +285,14 @@
         </div>
         
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card text-center h-100 card-metric">
+            <div class="card text-center h-100 card-metric animate-slide-up">
                 <div class="card-body">
                     <div class="mb-3">
-                        <i class="fas fa-chart-line fa-3x text-success"></i>
+                        <i class="fas fa-chart-line fa-3x text-primary"></i>
                     </div>
                     <h5 class="card-title">Visualizaciones</h5>
                     <p class="card-text">Explora gráficos interactivos del modelo y resultados.</p>
-                    <a href="{{ url_for('visualizations') }}" class="btn btn-success">
+                    <a href="{{ url_for('visualizations') }}" class="btn btn-secondary-outline">
                         <i class="fas fa-eye me-2"></i>Ver Gráficos
                     </a>
                 </div>
@@ -259,14 +300,14 @@
         </div>
         
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card text-center h-100 card-metric">
+            <div class="card text-center h-100 card-metric animate-slide-up">
                 <div class="card-body">
                     <div class="mb-3">
-                        <i class="fas fa-upload fa-3x text-warning"></i>
+                        <i class="fas fa-upload fa-3x text-primary"></i>
                     </div>
                     <h5 class="card-title">Carga Masiva</h5>
                     <p class="card-text">Sube un archivo CSV para predicciones en lote.</p>
-                    <a href="{{ url_for('upload_file') }}" class="btn btn-warning">
+                    <a href="{{ url_for('upload_file') }}" class="btn btn-secondary-outline">
                         <i class="fas fa-file-csv me-2"></i>Subir CSV
                     </a>
                 </div>
@@ -274,15 +315,15 @@
         </div>
         
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card text-center h-100 card-metric">
+            <div class="card text-center h-100 card-metric animate-slide-up">
                 <div class="card-body">
                     <div class="mb-3">
-                        <i class="fas fa-chart-bar fa-3x text-info"></i>
+                        <i class="fas fa-chart-bar fa-3x text-primary"></i>
                     </div>
                     <h5 class="card-title">Dashboard Detallado</h5>
                     <p class="card-text">Vista completa de métricas y comparaciones.</p>
-                    <a href="{{ url_for('dashboard') }}" class="btn btn-info">
-                        <i class="fas fa-tachometer-alt me-2"></i>Ver Dashboard
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary-outline">
+                        <i class="fas fa-chart-bar me-2"></i>Análisis Detallado
                     </a>
                 </div>
             </div>

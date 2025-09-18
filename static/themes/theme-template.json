@@ -1,0 +1,107 @@
+{
+  "_readme": "Plantilla para crear temas personalizados",
+  "_instructions": {
+    "colors": "Use OKLCH para mejores colores: oklch(lightness chroma hue)",
+    "lightness": "0.0 (negro) a 1.0 (blanco)",
+    "chroma": "0.0 (gris) a 0.4 (saturado)",
+    "hue": "0-360 grados (rojo=0, verde=120, azul=240)",
+    "typography": "Especifica fuentes y tamaños responsivos",
+    "spacing": "Define radios y espaciados base",
+    "shadows": "Sombras con transparencias HSL",
+    "animations": "Duraciones y curvas de animación"
+  },
+  
+  "name": "Mi Tema Personalizado",
+  "description": "Descripción de tu tema personalizado",
+  "version": "1.0.0",
+  
+  "colors": {
+    "light": {
+      "background": "oklch(0.98 0.005 200)",
+      "foreground": "oklch(0.20 0.02 200)",
+      "card": "oklch(1.0 0 0)",
+      "card-foreground": "oklch(0.20 0.02 200)",
+      "popover": "oklch(1.0 0 0)",
+      "popover-foreground": "oklch(0.20 0.02 200)",
+      "primary": "oklch(0.55 0.18 250)",
+      "primary-foreground": "oklch(1.0 0 0)",
+      "secondary": "oklch(0.85 0.05 220)",
+      "secondary-foreground": "oklch(0.20 0.02 200)",
+      "muted": "oklch(0.88 0.02 210)",
+      "muted-foreground": "oklch(0.55 0.05 210)",
+      "accent": "oklch(0.65 0.12 180)",
+      "accent-foreground": "oklch(1.0 0 0)",
+      "destructive": "oklch(0.62 0.20 15)",
+      "destructive-foreground": "oklch(1.0 0 0)",
+      "border": "oklch(0.88 0.02 210)",
+      "input": "oklch(0.88 0.02 210)",
+      "ring": "oklch(0.55 0.18 250)",
+      "chart-1": "oklch(0.55 0.18 250)",
+      "chart-2": "oklch(0.60 0.15 270)",
+      "chart-3": "oklch(0.45 0.20 230)",
+      "chart-4": "oklch(0.65 0.12 290)",
+      "chart-5": "oklch(0.70 0.10 310)"
+    },
+    "dark": {
+      "background": "oklch(0.10 0.02 200)",
+      "foreground": "oklch(0.90 0.02 200)",
+      "card": "oklch(0.15 0.02 200)",
+      "card-foreground": "oklch(0.90 0.02 200)",
+      "popover": "oklch(0.15 0.02 200)",
+      "popover-foreground": "oklch(0.90 0.02 200)",
+      "primary": "oklch(0.65 0.18 250)",
+      "primary-foreground": "oklch(0.05 0.02 200)",
+      "secondary": "oklch(0.25 0.05 220)",
+      "secondary-foreground": "oklch(0.90 0.02 200)",
+      "muted": "oklch(0.20 0.02 210)",
+      "muted-foreground": "oklch(0.70 0.05 210)",
+      "accent": "oklch(0.75 0.12 180)",
+      "accent-foreground": "oklch(0.05 0.02 200)",
+      "destructive": "oklch(0.65 0.20 15)",
+      "destructive-foreground": "oklch(1.0 0 0)",
+      "border": "oklch(0.20 0.02 210)",
+      "input": "oklch(0.20 0.02 210)",
+      "ring": "oklch(0.65 0.18 250)",
+      "chart-1": "oklch(0.65 0.18 250)",
+      "chart-2": "oklch(0.70 0.15 270)",
+      "chart-3": "oklch(0.55 0.20 230)",
+      "chart-4": "oklch(0.75 0.12 290)",
+      "chart-5": "oklch(0.80 0.10 310)"
+    }
+  },
+  
+  "typography": {
+    "font-sans": "Inter, system-ui, sans-serif",
+    "font-serif": "Georgia, serif",
+    "font-mono": "Consolas, monospace",
+    "sizes": {
+      "h1": "clamp(2.5rem, 5vw, 3.5rem)",
+      "h2": "clamp(2rem, 4vw, 2.75rem)",
+      "h3": "clamp(1.5rem, 3vw, 2rem)",
+      "h4": "clamp(1.25rem, 2.5vw, 1.5rem)",
+      "h5": "clamp(1.125rem, 2vw, 1.25rem)",
+      "h6": "clamp(1rem, 1.5vw, 1.125rem)",
+      "body": "1rem",
+      "lead": "1.25rem"
+    }
+  },
+  
+  "spacing": {
+    "radius": "0.5rem",
+    "spacing-base": "0.25rem"
+  },
+  
+  "shadows": {
+    "sm": "0px 3px 6px -2px hsl(200 20% 0% / 0.08)",
+    "md": "0px 4px 8px -2px hsl(200 20% 0% / 0.12)",
+    "lg": "0px 6px 12px -3px hsl(200 20% 0% / 0.16)",
+    "xl": "0px 8px 16px -4px hsl(200 20% 0% / 0.20)"
+  },
+  
+  "animations": {
+    "duration-fast": "0.2s",
+    "duration-normal": "0.3s",
+    "duration-slow": "0.5s",
+    "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  }
+}

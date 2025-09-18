@@ -119,6 +119,46 @@ def index():
                          results=dm2_app.results,
                          model_loaded=dm2_app.model_loaded)
 
+@app.route('/theme-demo')
+def theme_demo():
+    """Demo del sistema de temas dinámicos"""
+    return render_template('theme-demo.html')
+
+@app.route('/ux-demo')
+def ux_demo():
+    """Demo de UX con métricas problemáticas para mostrar alertas críticas"""
+    from types import SimpleNamespace
+    
+    # Crear métricas simuladas con problemas críticos
+    mock_metrics = SimpleNamespace()
+    mock_metrics.diabetes_sensitivity = 0.0  # 0% - CRÍTICO
+    mock_metrics.diabetes_specificity = 0.946  # 94.6% - Bueno
+    mock_metrics.f1_macro = 0.45  # 0.45 - CRÍTICO
+    mock_metrics.diabetes_ppv = 0.3  # 30% - CRÍTICO  
+    mock_metrics.balanced_accuracy = 0.473  # 0.473 - CRÍTICO
+    
+    mock_model = SimpleNamespace()
+    mock_model.metrics = mock_metrics
+    mock_model.name = "logistic_regression"
+    
+    mock_dataset = SimpleNamespace()
+    mock_dataset.shape = [500, 21]
+    mock_dataset.target_distribution = {
+        'Normal': 300,
+        'Prediabetes': 150,
+        'Diabetes': 50
+    }
+    
+    mock_results = SimpleNamespace()
+    mock_results.final_model = mock_model
+    mock_results.dataset_info = mock_dataset
+    mock_results.execution_timestamp = "2025-09-18T02:50:00"
+    
+    return render_template('index.html', 
+                         results=mock_results,
+                         model_loaded=True,
+                         demo_mode=True)
+
 @app.route('/dashboard')
 def dashboard():
     """Dashboard detallado con métricas"""
@@ -525,6 +565,135 @@ def analyze_biomarkers():
     except Exception as e:
         return jsonify({'error': f'Error en análisis de biomarcadores: {str(e)}'}), 500
 
+# =====================================
+# SISTEMA DE TEMAS DINÁMICOS
+# =====================================
+
+from theme_manager import theme_manager
+
+@app.route('/api/themes')
+def api_themes():
+    """API para obtener temas disponibles"""
+    try:
+        themes = theme_manager.get_available_themes()
+        current_theme = theme_manager.get_current_theme()
+        
+        return jsonify({
+            'themes': themes,
+            'current': current_theme,
+            'success': True
+        })
+    except Exception as e:
+        return jsonify({'error': str(e), 'success': False}), 500
+
+@app.route('/api/themes/<theme_id>')
+def api_theme_detail(theme_id):
+    """API para obtener detalles de un tema específico"""
+    try:
+        theme_data = theme_manager.load_theme(theme_id)
+        
+        if not theme_data:
+            return jsonify({'error': 'Tema no encontrado', 'success': False}), 404
+            
+        return jsonify({
+            'theme': theme_data,
+            'success': True
+        })
+    except Exception as e:
+        return jsonify({'error': str(e), 'success': False}), 500
+
+@app.route('/api/themes/<theme_id>/css')
+def api_theme_css(theme_id):
+    """API para obtener CSS generado de un tema"""
+    try:
+        css_content = theme_manager.generate_complete_css(theme_id)
+        
+        if not css_content:
+            return "/* Theme not found */", 404, {'Content-Type': 'text/css'}
+            
+        return css_content, 200, {'Content-Type': 'text/css'}
+    except Exception as e:
+        return f"/* Error: {str(e)} */", 500, {'Content-Type': 'text/css'}
+
+@app.route('/api/themes/current/<theme_id>', methods=['POST'])
+def api_set_theme(theme_id):
+    """API para establecer el tema actual"""
+    try:
+        success = theme_manager.set_current_theme(theme_id)
+        
+        if success:
+            return jsonify({
+                'message': f'Tema {theme_id} aplicado correctamente',
+                'current': theme_id,
+                'success': True
+            })
+        else:
+            return jsonify({
+                'error': 'Tema no encontrado',
+                'success': False
+            }), 404
+            
+    except Exception as e:
+        return jsonify({'error': str(e), 'success': False}), 500
+
+@app.route('/api/themes/custom', methods=['POST'])
+def api_save_custom_theme():
+    """API para guardar tema personalizado"""
+    try:
+        data = request.json
+        
+        if not data or 'theme_id' not in data or 'theme_data' not in data:
+            return jsonify({
+                'error': 'Datos de tema inválidos',
+                'success': False
+            }), 400
+            
+        theme_id = data['theme_id']
+        theme_data = data['theme_data']
+        
+        # Validar que no sobrescriba temas por defecto
+        if theme_id in ['default', 'medical-blue', 'warm-clinical']:
+            return jsonify({
+                'error': 'No se puede sobrescribir temas por defecto',
+                'success': False
+            }), 400
+            
+        success = theme_manager.save_custom_theme(theme_id, theme_data)
+        
+        if success:
+            return jsonify({
+                'message': f'Tema personalizado {theme_id} guardado',
+                'success': True
+            })
+        else:
+            return jsonify({
+                'error': 'Error al guardar tema personalizado',
+                'success': False
+            }), 500
+            
+    except Exception as e:
+        return jsonify({'error': str(e), 'success': False}), 500
+
+@app.route('/api/themes/<theme_id>', methods=['DELETE'])
+def api_delete_theme(theme_id):
+    """API para eliminar tema personalizado"""
+    try:
+        success = theme_manager.delete_theme(theme_id)
+        
+        if success:
+            return jsonify({
+                'message': f'Tema {theme_id} eliminado',
+                'success': True
+            })
+        else:
+            return jsonify({
+                'error': 'No se pudo eliminar el tema (solo temas personalizados)',
+                'success': False
+            }), 400
+            
+    except Exception as e:
+        return jsonify({'error': str(e), 'success': False}), 500
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
@@ -539,4 +708,4 @@ if __name__ == '__main__':
     print(f"🤖 Modelo cargado: {'✅' if dm2_app.model_loaded else '❌'}")
     print("🌐 Accede a: http://localhost:5000")
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)

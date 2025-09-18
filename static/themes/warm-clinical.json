@@ -1,0 +1,90 @@
+{
+  "name": "Warm Clinical Theme",
+  "description": "Tema cálido y acogedor para entornos clínicos",
+  "version": "1.0.0",
+  "colors": {
+    "light": {
+      "background": "oklch(0.97 0.01 50)",
+      "foreground": "oklch(0.20 0.02 30)",
+      "card": "oklch(0.99 0.005 40)",
+      "card-foreground": "oklch(0.20 0.02 30)",
+      "popover": "oklch(0.99 0.005 40)",
+      "popover-foreground": "oklch(0.20 0.02 30)",
+      "primary": "oklch(0.50 0.12 25)",
+      "primary-foreground": "oklch(0.98 0.005 40)",
+      "secondary": "oklch(0.82 0.04 60)",
+      "secondary-foreground": "oklch(0.20 0.02 30)",
+      "muted": "oklch(0.86 0.02 45)",
+      "muted-foreground": "oklch(0.52 0.03 35)",
+      "accent": "oklch(0.68 0.08 100)",
+      "accent-foreground": "oklch(0.98 0.005 40)",
+      "destructive": "oklch(0.60 0.18 20)",
+      "destructive-foreground": "oklch(0.98 0.005 40)",
+      "border": "oklch(0.86 0.02 45)",
+      "input": "oklch(0.86 0.02 45)",
+      "ring": "oklch(0.50 0.12 25)",
+      "chart-1": "oklch(0.50 0.12 25)",
+      "chart-2": "oklch(0.55 0.10 45)",
+      "chart-3": "oklch(0.60 0.08 80)",
+      "chart-4": "oklch(0.65 0.06 120)",
+      "chart-5": "oklch(0.58 0.07 160)"
+    },
+    "dark": {
+      "background": "oklch(0.12 0.02 25)",
+      "foreground": "oklch(0.90 0.02 35)",
+      "card": "oklch(0.18 0.02 30)",
+      "card-foreground": "oklch(0.90 0.02 35)",
+      "popover": "oklch(0.18 0.02 30)",
+      "popover-foreground": "oklch(0.90 0.02 35)",
+      "primary": "oklch(0.65 0.12 35)",
+      "primary-foreground": "oklch(0.08 0.02 25)",
+      "secondary": "oklch(0.28 0.04 40)",
+      "secondary-foreground": "oklch(0.90 0.02 35)",
+      "muted": "oklch(0.22 0.02 30)",
+      "muted-foreground": "oklch(0.68 0.03 35)",
+      "accent": "oklch(0.72 0.08 100)",
+      "accent-foreground": "oklch(0.08 0.02 25)",
+      "destructive": "oklch(0.65 0.18 25)",
+      "destructive-foreground": "oklch(0.95 0.005 35)",
+      "border": "oklch(0.22 0.02 30)",
+      "input": "oklch(0.22 0.02 30)",
+      "ring": "oklch(0.65 0.12 35)",
+      "chart-1": "oklch(0.65 0.12 35)",
+      "chart-2": "oklch(0.70 0.10 55)",
+      "chart-3": "oklch(0.75 0.08 90)",
+      "chart-4": "oklch(0.68 0.06 130)",
+      "chart-5": "oklch(0.72 0.07 170)"
+    }
+  },
+  "typography": {
+    "font-sans": "Nunito Sans, system-ui, sans-serif",
+    "font-serif": "Lora, serif",
+    "font-mono": "Fira Code, monospace",
+    "sizes": {
+      "h1": "clamp(2.4rem, 4.5vw, 3.2rem)",
+      "h2": "clamp(1.95rem, 3.8vw, 2.6rem)",
+      "h3": "clamp(1.6rem, 2.9vw, 2.1rem)",
+      "h4": "clamp(1.3rem, 2.3vw, 1.6rem)",
+      "h5": "clamp(1.15rem, 1.9vw, 1.3rem)",
+      "h6": "clamp(1.05rem, 1.6vw, 1.15rem)",
+      "body": "1.05rem",
+      "lead": "1.3rem"
+    }
+  },
+  "spacing": {
+    "radius": "0.625rem",
+    "spacing-base": "0.3rem"
+  },
+  "shadows": {
+    "sm": "0px 2px 6px -1px hsl(25 15% 0% / 0.06), 0px 1px 2px -1px hsl(25 15% 0% / 0.06)",
+    "md": "0px 4px 10px -2px hsl(25 15% 0% / 0.10), 0px 2px 4px -2px hsl(25 15% 0% / 0.06)",
+    "lg": "0px 6px 14px -3px hsl(25 15% 0% / 0.14), 0px 4px 6px -2px hsl(25 15% 0% / 0.08)",
+    "xl": "0px 8px 20px -4px hsl(25 15% 0% / 0.18), 0px 6px 10px -3px hsl(25 15% 0% / 0.10)"
+  },
+  "animations": {
+    "duration-fast": "0.25s",
+    "duration-normal": "0.35s",
+    "duration-slow": "0.55s",
+    "easing": "cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+  }
+}

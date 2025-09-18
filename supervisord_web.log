@@ -4,3 +4,196 @@
 2025-09-17 22:50:24,166 INFO supervisord started with pid 7947
 2025-09-17 22:50:24,325 INFO spawned: 'dm2_webapp' with pid 7949
 2025-09-17 22:50:25,340 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:32,605 INFO waiting for dm2_webapp to stop
+2025-09-18 01:10:33,965 INFO stopped: dm2_webapp (exit status 0)
+2025-09-18 01:10:33,970 INFO spawned: 'dm2_webapp' with pid 25889
+2025-09-18 01:10:34,972 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:36,380 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:10:37,384 INFO spawned: 'dm2_webapp' with pid 25908
+2025-09-18 01:10:38,386 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:40,442 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:10:41,445 INFO spawned: 'dm2_webapp' with pid 25921
+2025-09-18 01:10:42,447 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:44,453 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:10:45,456 INFO spawned: 'dm2_webapp' with pid 25930
+2025-09-18 01:10:46,458 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:48,532 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:10:49,536 INFO spawned: 'dm2_webapp' with pid 25937
+2025-09-18 01:10:50,538 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:51,549 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:10:52,552 INFO spawned: 'dm2_webapp' with pid 25945
+2025-09-18 01:10:53,554 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:55,569 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:10:56,573 INFO spawned: 'dm2_webapp' with pid 25956
+2025-09-18 01:10:57,575 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:10:59,589 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:00,592 INFO spawned: 'dm2_webapp' with pid 25963
+2025-09-18 01:11:01,594 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:03,694 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:04,697 INFO spawned: 'dm2_webapp' with pid 25972
+2025-09-18 01:11:05,699 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:08,393 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:09,397 INFO spawned: 'dm2_webapp' with pid 26094
+2025-09-18 01:11:10,399 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:13,197 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:14,200 INFO spawned: 'dm2_webapp' with pid 26197
+2025-09-18 01:11:15,202 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:17,123 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:18,127 INFO spawned: 'dm2_webapp' with pid 26230
+2025-09-18 01:11:19,128 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:21,359 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:22,362 INFO spawned: 'dm2_webapp' with pid 26308
+2025-09-18 01:11:23,363 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:26,565 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:27,568 INFO spawned: 'dm2_webapp' with pid 26429
+2025-09-18 01:11:28,570 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:31,372 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:32,376 INFO spawned: 'dm2_webapp' with pid 26534
+2025-09-18 01:11:33,377 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:35,506 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:36,509 INFO spawned: 'dm2_webapp' with pid 26553
+2025-09-18 01:11:37,511 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:39,649 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:40,653 INFO spawned: 'dm2_webapp' with pid 26560
+2025-09-18 01:11:41,655 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:43,828 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:44,831 INFO spawned: 'dm2_webapp' with pid 26567
+2025-09-18 01:11:45,833 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:47,973 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:48,977 INFO spawned: 'dm2_webapp' with pid 26574
+2025-09-18 01:11:49,979 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:52,103 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:53,106 INFO spawned: 'dm2_webapp' with pid 26581
+2025-09-18 01:11:54,109 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:11:56,250 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:11:57,252 INFO spawned: 'dm2_webapp' with pid 26615
+2025-09-18 01:11:58,254 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:00,866 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:01,868 INFO spawned: 'dm2_webapp' with pid 26719
+2025-09-18 01:12:02,870 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:05,699 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:06,702 INFO spawned: 'dm2_webapp' with pid 26841
+2025-09-18 01:12:07,703 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:10,729 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:11,732 INFO spawned: 'dm2_webapp' with pid 26929
+2025-09-18 01:12:12,734 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:15,216 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:16,220 INFO spawned: 'dm2_webapp' with pid 27013
+2025-09-18 01:12:17,222 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:20,190 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:21,193 INFO spawned: 'dm2_webapp' with pid 27099
+2025-09-18 01:12:22,195 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:23,333 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:24,336 INFO spawned: 'dm2_webapp' with pid 27107
+2025-09-18 01:12:25,610 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:28,185 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:29,188 INFO spawned: 'dm2_webapp' with pid 27182
+2025-09-18 01:12:29,849 INFO waiting for dm2_webapp to stop
+2025-09-18 01:12:29,854 WARN stopped: dm2_webapp (terminated by SIGTERM)
+2025-09-18 01:12:39,639 INFO spawned: 'dm2_webapp' with pid 27211
+2025-09-18 01:12:40,641 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:43,298 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:43,300 INFO spawned: 'dm2_webapp' with pid 27225
+2025-09-18 01:12:44,316 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:47,527 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:48,530 INFO spawned: 'dm2_webapp' with pid 27242
+2025-09-18 01:12:50,327 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:52,976 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:53,980 INFO spawned: 'dm2_webapp' with pid 27259
+2025-09-18 01:12:54,981 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:12:57,980 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:12:58,984 INFO spawned: 'dm2_webapp' with pid 27278
+2025-09-18 01:12:59,985 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:03,181 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:04,184 INFO spawned: 'dm2_webapp' with pid 27297
+2025-09-18 01:13:05,186 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:07,526 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:08,529 INFO spawned: 'dm2_webapp' with pid 27316
+2025-09-18 01:13:09,531 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:09,900 INFO waiting for dm2_webapp to die
+2025-09-18 01:13:10,912 WARN stopped: dm2_webapp (terminated by SIGTERM)
+2025-09-18 01:13:20,842 INFO RPC interface 'supervisor' initialized
+2025-09-18 01:13:20,842 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2025-09-18 01:13:20,844 INFO daemonizing the supervisord process
+2025-09-18 01:13:20,844 INFO supervisord started with pid 27369
+2025-09-18 01:13:21,848 INFO spawned: 'dm2_webapp' with pid 27372
+2025-09-18 01:13:22,850 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:24,094 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:24,097 INFO spawned: 'dm2_webapp' with pid 27377
+2025-09-18 01:13:25,117 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:27,190 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:28,194 INFO spawned: 'dm2_webapp' with pid 27387
+2025-09-18 01:13:29,195 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:31,414 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:32,248 INFO spawned: 'dm2_webapp' with pid 27394
+2025-09-18 01:13:33,260 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:35,492 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:36,496 INFO spawned: 'dm2_webapp' with pid 27403
+2025-09-18 01:13:37,498 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:39,714 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:40,717 INFO spawned: 'dm2_webapp' with pid 27412
+2025-09-18 01:13:41,720 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:43,890 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:44,893 INFO spawned: 'dm2_webapp' with pid 27492
+2025-09-18 01:13:45,894 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:48,673 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:49,677 INFO spawned: 'dm2_webapp' with pid 27515
+2025-09-18 01:13:50,679 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:52,907 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:53,418 INFO spawned: 'dm2_webapp' with pid 27571
+2025-09-18 01:13:53,426 INFO waiting for dm2_webapp to stop
+2025-09-18 01:13:53,426 WARN stopped: dm2_webapp (terminated by SIGTERM)
+2025-09-18 01:13:53,430 INFO spawned: 'dm2_webapp' with pid 27572
+2025-09-18 01:13:54,432 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:55,549 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:56,552 INFO spawned: 'dm2_webapp' with pid 27588
+2025-09-18 01:13:57,554 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:13:58,691 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:13:59,694 INFO spawned: 'dm2_webapp' with pid 27597
+2025-09-18 01:14:00,696 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:01,830 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:02,832 INFO spawned: 'dm2_webapp' with pid 27604
+2025-09-18 01:14:03,834 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:04,933 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:05,936 INFO spawned: 'dm2_webapp' with pid 27610
+2025-09-18 01:14:06,938 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:08,027 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:09,031 INFO spawned: 'dm2_webapp' with pid 27616
+2025-09-18 01:14:10,032 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:11,108 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:12,112 INFO spawned: 'dm2_webapp' with pid 27623
+2025-09-18 01:14:13,113 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:14,258 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:15,261 INFO spawned: 'dm2_webapp' with pid 27630
+2025-09-18 01:14:16,263 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:17,454 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:18,458 INFO spawned: 'dm2_webapp' with pid 27639
+2025-09-18 01:14:19,460 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:20,633 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:21,637 INFO spawned: 'dm2_webapp' with pid 27645
+2025-09-18 01:14:22,639 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:23,772 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:24,775 INFO spawned: 'dm2_webapp' with pid 27651
+2025-09-18 01:14:25,777 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:26,927 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:27,930 INFO spawned: 'dm2_webapp' with pid 27659
+2025-09-18 01:14:28,932 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:30,261 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:30,899 INFO spawned: 'dm2_webapp' with pid 27667
+2025-09-18 01:14:31,908 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:34,206 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:34,350 INFO spawned: 'dm2_webapp' with pid 27676
+2025-09-18 01:14:35,358 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:36,721 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:37,725 INFO spawned: 'dm2_webapp' with pid 27682
+2025-09-18 01:14:38,727 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:41,213 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:42,217 INFO spawned: 'dm2_webapp' with pid 27696
+2025-09-18 01:14:43,219 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:45,915 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:46,918 INFO spawned: 'dm2_webapp' with pid 27712
+2025-09-18 01:14:47,920 INFO success: dm2_webapp entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-09-18 01:14:49,267 WARN exited: dm2_webapp (exit status 1; not expected)
+2025-09-18 01:14:49,477 INFO spawned: 'dm2_webapp' with pid 27720
+2025-09-18 01:14:49,480 INFO waiting for dm2_webapp to die
+2025-09-18 01:14:51,720 WARN stopped: dm2_webapp (exit status 1)
